@@ -1,5 +1,5 @@
 export class ModelComponent {
-    constructor(filepath) {
-        this.filepath = filepath;
+    constructor(model) {
+        this.model = model;
     }
 }
