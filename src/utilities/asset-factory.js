@@ -1,5 +1,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import starfighterGLTF from "../../assets/LPSP_SmallStarfighter.gltf";
+import starFighterGLTF from "../../assets/LPSP_SmallStarfighter.gltf";
+import luxuryShipGLTF from "../../assets/LPSP_LuxuryShip.gltf";
+import quadFighterGLTF from "../../assets/LPSP_QuadFighter.gltf";
 
 export class AssetFactory {
     constructor() {
@@ -8,7 +10,9 @@ export class AssetFactory {
     }
 
     async init() {
-        this.assets["STARFIGHTER"] = await this.gltfLoader.loadAsync(starfighterGLTF);
+        this.assets["STAR_FIGHTER"] = await this.gltfLoader.loadAsync(starFighterGLTF);
+        this.assets["LUXURY_SHIP"] = await this.gltfLoader.loadAsync(luxuryShipGLTF);
+        this.assets["QUAD_FIGHTER"] = await this.gltfLoader.loadAsync(quadFighterGLTF);
     }
 
     get(assetName) {

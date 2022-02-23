@@ -10,7 +10,7 @@ document.body.appendChild(renderer.domElement);
 
 const camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const controls = new OrbitControls( camera, renderer.domElement );
-camera.position.set(0, 10, -10);
+camera.position.set(0, 10, 0);
 controls.update();
 camera.lookAt(0, 0, 0);
 
@@ -22,23 +22,29 @@ scene.add(grid);
 const directionalLight = new THREE.DirectionalLight(0xffffff);
 scene.add(directionalLight);
 
-// Test Cube.
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshNormalMaterial();
-const cube = new THREE.Mesh( geometry, material );
-cube.position.set(10, 0, 10);
-scene.add(cube);
+// Random int utility.
+function getRandomInt() {
+    let charge = Math.random() * -1;
+    let value = Math.random() * 20;
+    return charge * value;
+}
 
 // Add Assets to the scene.
 let assetFactory = new AssetFactory();
 assetFactory
 .init()
 .then(() => {
-    for (let i = 0; i < 3; i++) {
-        let planeMesh = assetFactory.get("STARFIGHTER")
-        planeMesh.position.set(i * 5, i * 2, 0)
-        scene.add(planeMesh);
-    }
+    let starFighter = assetFactory.get("STAR_FIGHTER")
+    starFighter.position.set(getRandomInt(), 0, getRandomInt())
+    scene.add(starFighter);
+
+    let quadFighter = assetFactory.get("QUAD_FIGHTER")
+    quadFighter.position.set(getRandomInt(), 0, getRandomInt())
+    scene.add(quadFighter);
+
+    let luxuryShip = assetFactory.get("LUXURY_SHIP")
+    luxuryShip.position.set(getRandomInt(), 0, getRandomInt())
+    scene.add(luxuryShip);
 });
 
 function animate() {
