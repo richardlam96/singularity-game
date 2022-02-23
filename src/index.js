@@ -20,6 +20,7 @@ scene.add(grid);
 
 // Add a light from the top.
 const directionalLight = new THREE.DirectionalLight(0xffffff);
+directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 // Random int utility.
@@ -34,17 +35,15 @@ let assetFactory = new AssetFactory();
 assetFactory
 .init()
 .then(() => {
-    let starFighter = assetFactory.get("STAR_FIGHTER")
-    starFighter.position.set(getRandomInt(), 0, getRandomInt())
-    scene.add(starFighter);
-
-    let quadFighter = assetFactory.get("QUAD_FIGHTER")
-    quadFighter.position.set(getRandomInt(), 0, getRandomInt())
+    let quadFighter = assetFactory.get("QUAD_FIGHTER");
+    quadFighter.position.set(0, 0, 0);
     scene.add(quadFighter);
 
-    let luxuryShip = assetFactory.get("LUXURY_SHIP")
-    luxuryShip.position.set(getRandomInt(), 0, getRandomInt())
-    scene.add(luxuryShip);
+    for (let i = 0; i < 10; i++) {
+        let cube = assetFactory.getCube();
+        cube.position.set(getRandomInt(), 0, getRandomInt());
+        scene.add(cube);
+    }
 });
 
 function animate() {

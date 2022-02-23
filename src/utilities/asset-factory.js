@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import starFighterGLTF from "../../assets/LPSP_SmallStarfighter.gltf";
 import luxuryShipGLTF from "../../assets/LPSP_LuxuryShip.gltf";
@@ -17,5 +18,11 @@ export class AssetFactory {
 
     get(assetName) {
         return this.assets[assetName].scene.clone();
+    }
+
+    getCube() {
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshToonMaterial({color: 0x00ff00});
+        return new THREE.Mesh( geometry, material );
     }
 }
