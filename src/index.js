@@ -28,6 +28,14 @@ const directionalLight = new THREE.DirectionalLight(0xffffff);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
+// Init and run the game.
+let game = new Game({
+    scene: scene,
+    camera: camera,
+    light: directionalLight
+});
+
+// Initialize AssetFactory and AssetManager.
 let assetFactory = new AssetFactory();
 assetFactory
 .init()
@@ -43,13 +51,6 @@ assetFactory
         cube.position.set(x, 0, z);
         scene.add(cube);
     }
-});
-
-// Init and run the game.
-let game = new Game({
-    scene: scene,
-    camera: camera,
-    light: directionalLight
 });
 
 function render() {
