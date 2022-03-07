@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AssetFactory } from "./utilities/asset-factory";
+import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
 
 
@@ -44,16 +45,16 @@ export class Game {
         this.assetFactory
         .init()
         .then(() => {
-            let plane = this.assetFactory.getPlane();
-            plane.position.set(0, 0, 0);
-            this.scene.add(plane);
+            let plane = new GameObject(this.assetFactory.getPlane());
+            plane.model.position.set(0, 0, 0);
+            this.scene.add(plane.model);
 
             for (let _ = 0; _ < 10; _++) {
-                let cube = this.assetFactory.getCube();
+                let cube = new GameObject(this.assetFactory.getCube());
                 let x = RandomGenerator.randIntBetween(-20, 20);
                 let z = RandomGenerator.randIntBetween(-20, 20);
-                cube.position.set(x, 0, z);
-                this.scene.add(cube);
+                cube.model.position.set(x, 0, z);
+                this.scene.add(cube.model);
             }
         });
     }
