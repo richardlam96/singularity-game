@@ -1,4 +1,4 @@
-import { Strategy, Context } from "../strategy/strategy";
+import { Strategy } from "../strategy/strategy";
 
 export class TurnLeftBehavior extends Strategy {
     execute(target) {
