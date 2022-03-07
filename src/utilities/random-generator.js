@@ -1,6 +1,6 @@
 export class RandomGenerator {
     static randInt(max) {
-        return Math.random * max;
+        return Math.random() * max;
     }
 
     static randIntBetween(low, high) {

@@ -12,12 +12,14 @@ export class AssetFactory {
 
     async init() {
         this.assets["STAR_FIGHTER"] = await this.gltfLoader.loadAsync(starFighterGLTF);
+        this.assets["OBSTACLE"] = new THREE.Mesh(
+            new THREE.BoxGeometry(1, 1, 1),
+            new THREE.MeshToonMaterial({color: 0x00ff00})
+        );
     }
 
     getCube() {
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshToonMaterial({color: 0x00ff00});
-        return new THREE.Mesh( geometry, material );
+        return this.assets["OBSTACLE"].clone();
     }
 
     getPlane() {
