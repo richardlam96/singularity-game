@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AssetFactory } from "./utilities/asset-factory";
+import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
 import { InputManager } from "./utilities/input-manager";
 import { RandomGenerator } from "./utilities/random-generator";
@@ -50,7 +51,7 @@ export class Game {
         this.assetFactory
         .init()
         .then(() => {
-            let plane = new GameObject(this.assetFactory.getPlane());
+            let plane = new ControlledGameObject(this.assetFactory.getPlane());
             plane.setController(new PlaneController(this.inputManager));
             plane.model.position.set(0, 0, 0);
             this.scene.add(plane.model);
@@ -58,7 +59,6 @@ export class Game {
 
             for (let _ = 0; _ < 10; _++) {
                 let cube = new GameObject(this.assetFactory.getCube());
-                cube.setController(new PlaneController(this.inputManager));   // Here so code doesn't break. But everything moves.
                 let x = RandomGenerator.randIntBetween(-20, 20);
                 let z = RandomGenerator.randIntBetween(-20, 20);
                 cube.model.position.set(x, 0, z);
