@@ -1,45 +1,26 @@
 import * as THREE from "three";
 import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
-import { InputManager } from "./utilities/input-manager";
 import { RandomGenerator } from "./utilities/random-generator";
 import { PlaneController } from "./controllers/plane-controller";
 
 
 export class Game {
-    constructor(assetFactory) {
-        this._renderer;
-        this.scene;
-        this.camera;
-        this.light;
-        this.assetFactory = assetFactory;
+    constructor(params) {
+        this._renderer = params.renderer;
+        this.scene = params.scene;
+        this.camera = params.camera;
+        this.light = params.light;
+        this.assetFactory = params.assetFactory;
+
         this.plane;
         this.gameObjects = [];
-        this.inputManager = new InputManager;
+        this.inputManager = params.inputManager;
 
         this._init();
     }
 
     _init() {
-        // Initialize the scene.
-        this.scene = new THREE.Scene();
-
-        // Initialize the this._renderer.
-        this._renderer = new THREE.WebGLRenderer({antialias: true});
-        this._renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(this._renderer.domElement);
-
-        // Initialize Camera Controls.
-        this.camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        
-        // Add a Grid for easier visibility and positioning.
-        this.scene.add(new THREE.GridHelper(50, 50));
-
-        // Add a light from the top.
-        this.light = new THREE.DirectionalLight(0xffffff);
-        this.light.castShadow = true;
-        this.scene.add(this.light);
-
         // Initialize game objects and systems.
         this.plane = new ControlledGameObject(this.assetFactory.getPlane());
         this.plane.setController(new PlaneController(this.inputManager));
