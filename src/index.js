@@ -1,5 +1,11 @@
+import { AssetFactory } from "./utilities/asset-factory";
 import { Game } from "./game";
 
-// Init and run the game.
-let game = new Game();
-game.render();
+
+let assetFactory = new AssetFactory();
+assetFactory.init()
+.then(() => {
+    // Init and run the game.
+    let game = new Game(assetFactory);
+    game.render();
+});

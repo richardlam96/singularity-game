@@ -15,9 +15,9 @@ export class PlaneController extends Controller {
         } 
         
         if (this._inputManager.keys.arrowLeft) {
-            gameObject.model.rotation.y += this.speed;
+            gameObject.model.rotation.y += this.speed / 2;
         } else if (this._inputManager.keys.arrowRight) {
-            gameObject.model.rotation.y -= this.speed;
+            gameObject.model.rotation.y -= this.speed / 2;
         }
     }
 }
