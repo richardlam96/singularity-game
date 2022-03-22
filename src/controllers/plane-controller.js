@@ -1,3 +1,4 @@
+import { Vector3 } from "three";
 import { Controller } from "./controller";
 
 export class PlaneController extends Controller {
@@ -8,15 +9,15 @@ export class PlaneController extends Controller {
 
     execute(gameObject) {
         if (this._inputManager.keys.arrowUp) {
-            gameObject.model.position.z -= this.speed;
+            gameObject.model.translateOnAxis(new Vector3(0, 0, -1), this.speed);
         } else if (this._inputManager.keys.arrowDown) {
-            gameObject.model.position.z += this.speed;
+            gameObject.model.translateOnAxis(new Vector3(0, 0, 1), this.speed);
         } 
         
         if (this._inputManager.keys.arrowLeft) {
-            gameObject.model.position.x -= this.speed;
+            gameObject.model.rotation.y += this.speed;
         } else if (this._inputManager.keys.arrowRight) {
-            gameObject.model.position.x += this.speed;
+            gameObject.model.rotation.y -= this.speed;
         }
     }
 }
