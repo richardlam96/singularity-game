@@ -1,6 +1,8 @@
 export class InputManager {
     constructor() {
         this.keys = {
+            arrowUp: false,
+            arrowDown: false,
             arrowLeft: false,
             arrowRight: false
         }
@@ -11,7 +13,13 @@ export class InputManager {
 
     _onKeyDown = (event) => {
         switch(event.key) {
-           case "ArrowLeft":
+           case "ArrowUp":
+                this.keys.arrowUp = true;
+                break;
+            case "ArrowDown":
+                this.keys.arrowDown = true;
+                break;
+            case "ArrowLeft":
                 this.keys.arrowLeft = true;
                 break;
             case "ArrowRight":
@@ -24,6 +32,12 @@ export class InputManager {
 
     _onKeyUp = (event) => {
         switch(event.key) {
+            case "ArrowUp":
+                this.keys.arrowUp = false;
+                break;
+            case "ArrowDown":
+                this.keys.arrowDown = false;
+                break;
             case "ArrowLeft":
                 this.keys.arrowLeft = false;
                 break;
