@@ -20,11 +20,10 @@ export class Game {
     }
 
     _init() {
-
-        // Initialize game objects and systems.
+        // Initialize player plane and obstacles.
         this.plane = new ControlledGameObject(this.assetFactory.getPlane());
         this.plane.setController(new PlaneController(this.inputManager));
-        this.plane.model.position.set(0, 0, 0);
+        this.plane.model.position.set(0, this.plane.model.scale.y / 2, 0);
         this.scene.add(this.plane.model);
         this.camera.setTarget(this.plane.model);
 
@@ -32,7 +31,7 @@ export class Game {
             let cube = new GameObject(this.assetFactory.getCube());
             let x = RandomGenerator.randIntBetween(-20, 20);
             let z = RandomGenerator.randIntBetween(-20, 20);
-            cube.model.position.set(x, 0, z);
+            cube.model.position.set(x, cube.model.scale.y / 2, z);
             this.scene.add(cube.model);
             this.gameObjects.push(cube);
         }
