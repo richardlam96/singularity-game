@@ -2,7 +2,9 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { AssetFactory } from "./utilities/asset-factory";
 import { GameObject } from "./game-objects/game-object";
+import { InputManager } from "./utilities/input-manager";
 import { RandomGenerator } from "./utilities/random-generator";
+import { PlaneController } from "./controllers/plane-controller";
 
 
 export class Game {
@@ -13,6 +15,8 @@ export class Game {
         this.camera;
         this.light;
         this.assetFactory;
+        this.gameObjects = [];
+        this.inputManager = new InputManager;
 
         this._init();
     }
@@ -41,26 +45,32 @@ export class Game {
         this.light.castShadow = true;
         this.scene.add(this.light);
 
+        // Initialize game objects and systems.
         this.assetFactory = new AssetFactory();
         this.assetFactory
         .init()
         .then(() => {
             let plane = new GameObject(this.assetFactory.getPlane());
+            plane.setController(new PlaneController(this.inputManager));
             plane.model.position.set(0, 0, 0);
             this.scene.add(plane.model);
+            this.gameObjects.push(plane);
 
             for (let _ = 0; _ < 10; _++) {
                 let cube = new GameObject(this.assetFactory.getCube());
+                cube.setController(new PlaneController(this.inputManager));   // Here so code doesn't break. But everything moves.
                 let x = RandomGenerator.randIntBetween(-20, 20);
                 let z = RandomGenerator.randIntBetween(-20, 20);
                 cube.model.position.set(x, 0, z);
                 this.scene.add(cube.model);
+                this.gameObjects.push(cube);
             }
         });
     }
 
     update() {
         this._cameraControls.update();  // For Orbit Camera
+        this.gameObjects.forEach(gameObject => gameObject.update());
     }
 
     render = () => {

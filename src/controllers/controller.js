@@ -1,7 +1,6 @@
 export class Controller {
-    constructor(inputManager, gameObject) {
+    constructor(inputManager) {
         this._inputManager = inputManager;
-        this._gameObject = gameObject;
     }
 
     execute() {
