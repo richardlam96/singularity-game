@@ -1,9 +1,10 @@
 import { CollisionSystem } from "./systems/collision-system";
+import { HitboxSystem } from "./systems/hitbox-system";
 import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
 import { PlaneController } from "./controllers/plane-controller";
-import { HalfBoxStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
+import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
 
 export class Game {
@@ -18,15 +19,15 @@ export class Game {
         this.plane;
         this.gameObjects = [];
         this.collisionSystem;
+        this.hitboxSystem;
 
         this._init();
     }
 
     _init() {
         // Initialize player plane and obstacles.
-        this.plane = new ControlledGameObject(this.assetFactory.getPlane(), new HalfBoxStrategy());
+        this.plane = new ControlledGameObject(this.assetFactory.getPlane(), new HalfDepthStrategy());
         this.plane.setController(new PlaneController(this.inputManager));
-        this.plane.model.position.set(0, this.plane.model.scale.y / 2, 0);
         this.scene.add(this.plane.model);
         this.camera.setTarget(this.plane.model);
 
@@ -39,6 +40,12 @@ export class Game {
             this.gameObjects.push(cube);
         }
 
+        // Initialize Hitbox System.
+        this.hitboxSystem = new HitboxSystem({
+            player: this.plane,
+            obstacles: this.gameObjects
+        });
+
         // Initialize the Collision System with the game objects.
         this.collisionSystem = new CollisionSystem({
             player: this.plane,
@@ -49,6 +56,7 @@ export class Game {
     update() {
         this.camera.update();
         this.plane.controller.execute(this.plane);
+        this.hitboxSystem.update();
         this.collisionSystem.update();
     }
 

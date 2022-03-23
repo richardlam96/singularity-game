@@ -5,7 +5,8 @@ export class Strategy {
 }
 
 export class Context {
-    constructor() {
+    constructor(data) {
+        this.data = data;
         this._currentStrategy;
     }
 
@@ -18,6 +19,6 @@ export class Context {
     }
 
     executeStrategy() {
-        throw new Error("Must implement execute() method for Context interface.");
+        this._currentStrategy.execute(this.data);
     }
 }
