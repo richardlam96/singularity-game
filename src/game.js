@@ -33,7 +33,7 @@ export class Game {
             let cube = new GameObject(this.assetFactory.getCube());
             let x = RandomGenerator.randIntBetween(-20, 20);
             let z = RandomGenerator.randIntBetween(-20, 20);
-            cube.model.position.set(x, cube.model.scale.y / 2, z);
+            cube.model.position.set(x, 0, z);
             this.scene.add(cube.model);
             this.gameObjects.push(cube);
         }

@@ -3,11 +3,14 @@ import * as THREE from 'three';
 export class GameObject {
     constructor(model) {
         this.model = model;
-        this.hitbox = new THREE.Box3().setFromObject(model);
+        this.hitbox = new THREE.Box3();
     }
 
     _updateHitbox() {
-        this.hitbox.setFromObject(this.model);
+        let modelBox = new THREE.Box3().setFromObject(this.model);
+        let modelBoxSize = new THREE.Vector3()
+        modelBox.getSize(modelBoxSize);
+        this.hitbox.setFromCenterAndSize(this.model.position, modelBoxSize.divideScalar(2));
     }
 
     update() {
