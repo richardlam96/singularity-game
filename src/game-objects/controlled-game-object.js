@@ -15,6 +15,7 @@ export class ControlledGameObject extends GameObject {
     }
 
     update() {
+        super.update();
         this.controller.execute(this);
     }
 }

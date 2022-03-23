@@ -1,3 +1,4 @@
+import { CollisionSystem } from "./systems/collision-system";
 import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
@@ -15,6 +16,7 @@ export class Game {
 
         this.plane;
         this.gameObjects = [];
+        this.collisionSystem;
 
         this._init();
     }
@@ -35,12 +37,19 @@ export class Game {
             this.scene.add(cube.model);
             this.gameObjects.push(cube);
         }
+
+        // Initialize the Collision System with the game objects.
+        this.collisionSystem = new CollisionSystem({
+            player: this.plane,
+            obstacles: this.gameObjects
+        });
     }
 
     update() {
         this.gameObjects.forEach(gameObject => gameObject.update());
         this.plane.update();
         this.camera.update();
+        this.collisionSystem.update();
     }
 
     render = () => {
