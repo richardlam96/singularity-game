@@ -3,6 +3,7 @@ import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
 import { PlaneController } from "./controllers/plane-controller";
+import { HalfBoxStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
 
 export class Game {
@@ -23,14 +24,14 @@ export class Game {
 
     _init() {
         // Initialize player plane and obstacles.
-        this.plane = new ControlledGameObject(this.assetFactory.getPlane());
+        this.plane = new ControlledGameObject(this.assetFactory.getPlane(), new HalfBoxStrategy());
         this.plane.setController(new PlaneController(this.inputManager));
         this.plane.model.position.set(0, this.plane.model.scale.y / 2, 0);
         this.scene.add(this.plane.model);
         this.camera.setTarget(this.plane.model);
 
         for (let _ = 0; _ < 10; _++) {
-            let cube = new GameObject(this.assetFactory.getCube());
+            let cube = new GameObject(this.assetFactory.getCube(), new FullBoxStrategy());
             let x = RandomGenerator.randIntBetween(-20, 20);
             let z = RandomGenerator.randIntBetween(-20, 20);
             cube.model.position.set(x, 0, z);
@@ -46,9 +47,8 @@ export class Game {
     }
 
     update() {
-        this.gameObjects.forEach(gameObject => gameObject.update());
-        this.plane.update();
         this.camera.update();
+        this.plane.controller.execute(this.plane);
         this.collisionSystem.update();
     }
 

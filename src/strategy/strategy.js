@@ -6,18 +6,18 @@ export class Strategy {
 
 export class Context {
     constructor() {
-        this._current;
+        this._currentStrategy;
     }
 
-    set(strategy) {
-        this._current = strategy;
+    setStrategy(strategy) {
+        this._currentStrategy = strategy;
     }
 
-    get() {
+    getStrategy() {
         return this._current;
     }
 
-    execute() {
+    executeStrategy() {
         throw new Error("Must implement execute() method for Context interface.");
     }
 }

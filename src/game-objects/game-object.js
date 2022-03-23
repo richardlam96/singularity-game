@@ -1,19 +1,11 @@
 import * as THREE from 'three';
+import { Context } from '../strategy/strategy';
 
 export class GameObject {
-    constructor(model) {
+    constructor(model, hitboxStrategy) {
         this.model = model;
         this.hitbox = new THREE.Box3();
-    }
-
-    _updateHitbox() {
-        let modelBox = new THREE.Box3().setFromObject(this.model);
-        let modelBoxSize = new THREE.Vector3()
-        modelBox.getSize(modelBoxSize);
-        this.hitbox.setFromCenterAndSize(this.model.position, modelBoxSize.divideScalar(2));
-    }
-
-    update() {
-        this._updateHitbox();
+        this.hitboxContext = new Context();
+        this.hitboxContext.setStrategy(hitboxStrategy);
     }
 }

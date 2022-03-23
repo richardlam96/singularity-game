@@ -1,8 +1,8 @@
 import { GameObject } from "./game-object";
 
 export class ControlledGameObject extends GameObject {
-    constructor(model) {
-        super(model);
+    constructor(model, hitboxStrategy) {
+        super(model, hitboxStrategy);
         this.controller;
     }
 
@@ -12,10 +12,5 @@ export class ControlledGameObject extends GameObject {
 
     getController() {
         return this.controller;
-    }
-
-    update() {
-        super.update();
-        this.controller.execute(this);
     }
 }
