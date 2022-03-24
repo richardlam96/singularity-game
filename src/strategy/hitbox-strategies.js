@@ -6,8 +6,8 @@ export class HalfDepthStrategy extends Strategy {
         let modelBox = new THREE.Box3().setFromObject(gameObject.model);
         let modelBoxSize = new THREE.Vector3();
         modelBox.getSize(modelBoxSize);
-        let division = new THREE.Vector3(1, 1, 2);
-        gameObject.hitbox.setFromCenterAndSize(gameObject.model.position, modelBoxSize.divide(division));
+        modelBoxSize.z /= 2;
+        gameObject.hitbox.setFromCenterAndSize(gameObject.model.position, modelBoxSize);
     }
 }
 
