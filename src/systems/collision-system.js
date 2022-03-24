@@ -1,7 +1,8 @@
-import { Vector3 } from "three";
+import { System } from "./system";
 
-export class CollisionSystem {
+export class CollisionSystem extends System {
     constructor(params) {
+        super();
         this.player = params.player;
         this.obstacles = params.obstacles;
     }

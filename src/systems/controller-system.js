@@ -1,5 +1,8 @@
-export class ControllerSystem {
+import { System } from "./system";
+
+export class ControllerSystem extends System {
     constructor(controlledObjects) {
+        super();
         this.controlledObjects = controlledObjects;
     }
 

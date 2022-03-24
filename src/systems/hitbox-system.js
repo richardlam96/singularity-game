@@ -1,5 +1,8 @@
-export class HitboxSystem {
+import { System } from "./system";
+
+export class HitboxSystem extends System {
     constructor(params) {
+        super();
         this.player = params.player;
         this.obstacles = params.obstacles;
     }
