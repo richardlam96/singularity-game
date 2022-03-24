@@ -1,4 +1,5 @@
 import { CollisionSystem } from "./systems/collision-system";
+import { ControllerSystem } from "./systems/controller-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
@@ -18,6 +19,7 @@ export class Game {
 
         this.plane;
         this.gameObjects = [];
+        this.controllerSystem;
         this.collisionSystem;
         this.hitboxSystem;
 
@@ -46,6 +48,9 @@ export class Game {
             this.gameObjects.push(cube);
         }
 
+        // Initialize Controller System.
+        this.controllerSystem = new ControllerSystem([this.plane]);
+
         // Initialize Hitbox System.
         this.hitboxSystem = new HitboxSystem({
             player: this.plane,
@@ -61,7 +66,7 @@ export class Game {
 
     update() {
         this.camera.update();
-        this.plane.controller.execute(this.plane);
+        this.controllerSystem.update();
         this.hitboxSystem.update();
         this.collisionSystem.update();
     }
