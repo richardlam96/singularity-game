@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
 export class GameObject {
-    constructor(model, hitboxStrategy) {
-        this.model = model;
+    constructor(params) {
+        this.model = params.model;
         this.hitbox = new THREE.Box3();
-        this.hitboxStrategy = hitboxStrategy;
+        this.hitboxStrategy = params.hitboxStrategy;
     }
 }

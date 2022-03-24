@@ -26,13 +26,19 @@ export class Game {
 
     _init() {
         // Initialize player plane and obstacles.
-        this.plane = new ControlledGameObject(this.assetFactory.getPlane(), new HalfDepthStrategy());
-        this.plane.setController(new PlaneController(this.inputManager));
+        this.plane = new ControlledGameObject({
+            model: this.assetFactory.getPlane(), 
+            hitboxStrategy: new HalfDepthStrategy(),
+            controller: new PlaneController(this.inputManager)
+        });
         this.scene.add(this.plane.model);
         this.camera.setTarget(this.plane.model);
 
         for (let _ = 0; _ < 10; _++) {
-            let cube = new GameObject(this.assetFactory.getCube(), new FullBoxStrategy());
+            let cube = new GameObject({
+                model: this.assetFactory.getCube(), 
+                hitboxStrategy: new FullBoxStrategy()
+            });
             let x = RandomGenerator.randIntBetween(-20, 20);
             let z = RandomGenerator.randIntBetween(-20, 20);
             cube.model.position.set(x, 0, z);
