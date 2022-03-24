@@ -6,9 +6,9 @@ export class HitboxSystem {
 
     update() { 
         this.obstacles.forEach(obstacle => {
-            obstacle.hitboxContext.executeStrategy();
+            obstacle.hitboxStrategy.execute(obstacle);
         });
 
-        this.player.hitboxContext.executeStrategy();
+        this.player.hitboxStrategy.execute(this.player);
     }
 }
