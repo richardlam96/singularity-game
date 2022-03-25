@@ -12,6 +12,6 @@ export class CollisionSystem extends System {
             if (this.player.hitbox.intersectsBox(obstacle.hitbox)) {
                 console.log("player and obstacle collided");
             }
-        })
+        });
     }
 }
