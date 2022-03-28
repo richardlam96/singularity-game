@@ -21,6 +21,7 @@ export class MissileControls extends Controls {
                 hitboxStrategy: new FullBoxStrategy()
             });
             newMissile.model.position.copy(this._player.model.position);
+            newMissile.model.rotation.copy(this._player.model.rotation);
             this._missiles.push(newMissile);
             this._scene.add(newMissile.model);
         }
