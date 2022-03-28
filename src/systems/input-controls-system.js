@@ -4,14 +4,12 @@ export class InputControlsSystem extends System {
     constructor(params) {
         super()
         this._inputManager = params.inputManager;
-        this._controlsToObjectMap = params.controlsToObjectMap;
+        this._controls = params.controls;
     }
 
     update() {
-        for (const [controlCommand, gameObjects] in Object.entries(this._controlsToObjectMap)) {
-            gameObjects.forEach(gameObject => {
-                controlCommand.execute(gameObject);
-            });
-        }
+        this._controls.forEach(controlSet => {
+            controlSet.execute();
+        });
     }
 }

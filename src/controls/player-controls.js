@@ -1,21 +1,25 @@
+import { Vector3 } from 'three';
 import { Controls } from './controls';
 
 export class PlayerControls extends Controls {
-    constructor() {
-        speed = 0.1;
+    constructor(inputManager, playerObject) {
+        super();
+        this._inputManager = inputManager;
+        this._playerObject = playerObject;
+        this.speed = 0.1;
     }
 
-    execute(gameObject) {
+    execute() {
         if (this._inputManager.keys.arrowUp) {
-            gameObject.model.translateOnAxis(new Vector3(0, 0, -1), this.speed);
+            this._playerObject.model.translateOnAxis(new Vector3(0, 0, -1), this.speed);
         } else if (this._inputManager.keys.arrowDown) {
-            gameObject.model.translateOnAxis(new Vector3(0, 0, 1), this.speed);
+            this._playerObject.model.translateOnAxis(new Vector3(0, 0, 1), this.speed);
         } 
         
         if (this._inputManager.keys.arrowLeft) {
-            gameObject.model.rotation.y += this.speed / 2;
+            this._playerObject.model.rotation.y += this.speed / 2;
         } else if (this._inputManager.keys.arrowRight) {
-            gameObject.model.rotation.y -= this.speed / 2;
+            this._playerObject.model.rotation.y -= this.speed / 2;
         }
     }
 }
