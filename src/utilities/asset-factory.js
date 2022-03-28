@@ -15,6 +15,10 @@ export class AssetFactory {
             new THREE.BoxGeometry(1, 10, 1),
             new THREE.MeshToonMaterial({color: 0x00ff00})
         );
+        this.assets["MISSILE"] = new THREE.Mesh(
+            new THREE.BoxGeometry(0.5, 0.5, 1),
+            new THREE.MeshToonMaterial({color: 0xff0000})
+        );
     }
 
     getCube() {
@@ -23,5 +27,9 @@ export class AssetFactory {
 
     getPlane() {
         return this.assets["STAR_FIGHTER"].scene.clone();
+    }
+
+    getMissile() {
+        return this.assets["MISSILE"].clone();
     }
 }
