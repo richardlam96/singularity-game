@@ -80,7 +80,7 @@ export class Game {
         this.movementSystem = new MovementSystem(this.missiles);
     }
 
-    update() {
+    update(timeElapsed) {
         this.camera.update();
         this.inputControlsSystem.update();
         this.hitboxSystem.update();
@@ -88,9 +88,9 @@ export class Game {
         this.movementSystem.update();
     }
 
-    render = () => {
+    render = (timeElapsed) => {
         requestAnimationFrame(this.render);
-        this.update();
+        this.update(timeElapsed);
         this._renderer.render(this.scene, this.camera._camera);
     }
 }
