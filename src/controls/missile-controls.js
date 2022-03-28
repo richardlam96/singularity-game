@@ -1,5 +1,6 @@
+import { MoveForwardBehavior } from '../behaviors/move-forward-behavior';
 import { Controls } from './controls';
-import { GameObject } from '../game-objects/game-object';
+import { MovingObject } from '../game-objects/moving-object';
 import { FullBoxStrategy } from "../strategy/hitbox-strategies";
 
 export class MissileControls extends Controls {
@@ -16,9 +17,10 @@ export class MissileControls extends Controls {
 
     execute() {
         if (this._inputManager.keys.spacebar) {
-            let newMissile = new GameObject({
+            let newMissile = new MovingObject({
                 model: this._assetFactory.getMissile(),
-                hitboxStrategy: new FullBoxStrategy()
+                hitboxStrategy: new FullBoxStrategy(),
+                behavior: new MoveForwardBehavior()  // this should be a reference to one thing?
             });
             newMissile.model.position.copy(this._player.model.position);
             newMissile.model.rotation.copy(this._player.model.rotation);
