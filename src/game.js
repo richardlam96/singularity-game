@@ -82,7 +82,7 @@ export class Game {
 
     update(timeElapsed) {
         this.camera.update();
-        this.inputControlsSystem.update();
+        this.inputControlsSystem.update(timeElapsed);
         this.hitboxSystem.update();
         this.collisionSystem.update();
         this.movementSystem.update();
@@ -90,6 +90,7 @@ export class Game {
 
     render = (timeElapsed) => {
         requestAnimationFrame(this.render);
+        timeElapsed *= 0.001;
         this.update(timeElapsed);
         this._renderer.render(this.scene, this.camera._camera);
     }

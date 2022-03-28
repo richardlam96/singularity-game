@@ -13,10 +13,15 @@ export class MissileControls extends Controls {
         this._assetFactory = params.assetFactory;
         this._missiles = params.missiles;
         this._player = params.player;
+
+        this._lastMissileTime = 0;
     }
 
-    execute() {
-        if (this._inputManager.keys.spacebar) {
+    execute(timeElapsed) {
+
+        let readyToFire = (timeElapsed - this._lastMissileTime) > 1;  // this should come from player rpg.
+
+        if (this._inputManager.keys.spacebar && readyToFire) {
             let newMissile = new MovingObject({
                 model: this._assetFactory.getMissile(),
                 hitboxStrategy: new FullBoxStrategy(),
@@ -26,6 +31,7 @@ export class MissileControls extends Controls {
             newMissile.model.rotation.copy(this._player.model.rotation);
             this._missiles.push(newMissile);
             this._scene.add(newMissile.model);
+            this._lastMissileTime = timeElapsed;
         }
     }
 }

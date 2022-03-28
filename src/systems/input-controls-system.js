@@ -7,9 +7,9 @@ export class InputControlsSystem extends System {
         this._controls = params.controls;
     }
 
-    update() {
+    update(timeElapsed) {
         this._controls.forEach(controlSet => {
-            controlSet.execute();
+            controlSet.execute(timeElapsed);
         });
     }
 }
