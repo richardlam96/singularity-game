@@ -1,3 +1,4 @@
+import { MissileControls } from "./controls/missile-controls";
 import { PlayerControls } from "./controls/player-controls";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
@@ -17,6 +18,7 @@ export class Game {
 
         this.plane;
         this.gameObjects = [];
+        this.missiles = [];
         this.inputControlsSystem;
         this.collisionSystem;
         this.hitboxSystem;
@@ -48,7 +50,16 @@ export class Game {
         // Initialize the InputControlsSystem and pair Controls with objects.
         this.inputControlsSystem = new InputControlsSystem({
             inputManager: this.inputManager,
-            controls: [new PlayerControls(this.inputManager, this.plane)]
+            controls: [
+                new PlayerControls(this.inputManager, this.plane),
+                new MissileControls({
+                    scene: this.scene,
+                    inputManager: this.inputManager,
+                    assetFactory: this.assetFactory,
+                    missiles: this.missiles,
+                    player: this.plane
+                })
+            ]
         });
 
         // Initialize Hitbox System.

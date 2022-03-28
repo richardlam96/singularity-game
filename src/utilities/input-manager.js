@@ -4,7 +4,8 @@ export class InputManager {
             arrowUp: false,
             arrowDown: false,
             arrowLeft: false,
-            arrowRight: false
+            arrowRight: false,
+            spacebar: false
         }
 
         document.addEventListener('keydown', this._onKeyDown);
@@ -25,6 +26,9 @@ export class InputManager {
             case "ArrowRight":
                 this.keys.arrowRight = true;
                 break;
+            case " ":
+                this.keys.spacebar = true;
+                break;
             default:
                 break;
         }
@@ -44,7 +48,10 @@ export class InputManager {
             case "ArrowRight":
                 this.keys.arrowRight = false;
                 break;
-            default:
+            case " ":
+                this.keys.spacebar = false;
+                break;
+             default:
                 break;
         }
     }
