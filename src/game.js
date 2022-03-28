@@ -1,11 +1,8 @@
 import { CollisionSystem } from "./systems/collision-system";
-import { ControllerSystem } from "./systems/controller-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { PlayerInputSystem } from "./systems/player-input-system";
-import { ControlledGameObject } from "./game-objects/controlled-game-object";
 import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
-import { PlaneController } from "./controllers/plane-controller";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
 
@@ -20,7 +17,6 @@ export class Game {
 
         this.plane;
         this.gameObjects = [];
-        // this.controllerSystem;
         this.collisionSystem;
         this.hitboxSystem;
 
@@ -48,9 +44,6 @@ export class Game {
             this.gameObjects.push(cube);
         }
 
-        // Initialize Controller System.
-        // this.controllerSystem = new ControllerSystem([this.plane]);
-
         // Initialize the PlayerInputSystem.
         this.playerInputSystem = new PlayerInputSystem(this.inputManager, this.plane);
 
@@ -69,7 +62,6 @@ export class Game {
 
     update() {
         this.camera.update();
-        // this.controllerSystem.update();
         this.playerInputSystem.update();
         this.hitboxSystem.update();
         this.collisionSystem.update();
