@@ -3,6 +3,7 @@ import { PlayerControls } from "./controls/player-controls";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
+import { MovementSystem } from "./systems/movement-system";
 import { GameObject } from "./game-objects/game-object";
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
@@ -22,6 +23,7 @@ export class Game {
         this.inputControlsSystem;
         this.collisionSystem;
         this.hitboxSystem;
+        this.movementSystem;
 
         this._init();
     }
@@ -73,6 +75,9 @@ export class Game {
             player: this.plane,
             obstacles: this.gameObjects
         });
+
+        // Initialize the Movement System for missiles.
+        this.movementSystem = new MovementSystem(this.missiles);
     }
 
     update() {
@@ -80,6 +85,7 @@ export class Game {
         this.inputControlsSystem.update();
         this.hitboxSystem.update();
         this.collisionSystem.update();
+        this.movementSystem.update();
     }
 
     render = () => {
