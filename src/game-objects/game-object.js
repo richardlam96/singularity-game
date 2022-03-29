@@ -5,5 +5,6 @@ export class GameObject {
         this.model = params.model;
         this.hitbox = new THREE.Box3();
         this.hitboxStrategy = params.hitboxStrategy;
+        this.stats = params.stats;
     }
 }

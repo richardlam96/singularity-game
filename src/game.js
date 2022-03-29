@@ -5,6 +5,7 @@ import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { MovementSystem } from "./systems/movement-system";
 import { GameObject } from "./game-objects/game-object";
+import { RPGStats, PlayerRPGStats, MissileStats } from "./game-objects/rpg-stats";
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
@@ -33,6 +34,15 @@ export class Game {
         this.plane = new GameObject({
             model: this.assetFactory.getPlane(), 
             hitboxStrategy: new HalfDepthStrategy(),
+            stats: new PlayerRPGStats({
+                hp: 10,
+                poise: 10,
+                speed: 1,
+                turnSpeed: 0.25,
+                missileDelay: 1,
+                missileDamange: 1,
+                missileSpeed: 1
+            })
         });
         this.scene.add(this.plane.model);
         this.camera.setTarget(this.plane.model);
@@ -40,7 +50,11 @@ export class Game {
         for (let _ = 0; _ < 10; _++) {
             let cube = new GameObject({
                 model: this.assetFactory.getCube(), 
-                hitboxStrategy: new FullBoxStrategy()
+                hitboxStrategy: new FullBoxStrategy(),
+                stats: new RPGStats({
+                    hp: 3,
+                    poise: 3
+                })
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
             let z = RandomGenerator.randIntBetween(-40, 40);
@@ -59,6 +73,11 @@ export class Game {
                     inputManager: this.inputManager,
                     assetFactory: this.assetFactory,
                     missiles: this.missiles,
+                    missileStats: new MissileStats({
+                        hp: 1,
+                        poise: 3,
+                        speed: 1
+                    }),
                     player: this.plane
                 })
             ]

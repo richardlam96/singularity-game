@@ -5,6 +5,13 @@ export class RPGStats {
     }
 }
 
+export class MissileStats extends RPGStats {
+    constructor(params) {
+        super(params);
+        this.speed = params.speed;
+    }
+}
+
 export class PlayerRPGStats extends RPGStats {
     constructor(params) {
         super(params);
