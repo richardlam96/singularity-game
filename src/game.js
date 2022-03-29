@@ -5,7 +5,7 @@ import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
-import { RPGStats, PlayerRPGStats, MissileStats } from "./game-objects/rpg-stats";
+import { RPGStats, PlayerRPGStats } from "./game-objects/rpg-stats";
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
@@ -38,9 +38,10 @@ export class Game {
                 hp: 10,
                 poise: 10,
                 speed: 0.2,
-                turnSpeed: 0.05,
+                turnSpeed: 0.025,
                 missileDelay: 1,
-                missileDamange: 1,
+                missileHealth: 1,
+                missileDamage: 1,
                 missileSpeed: 1
             })
         });
@@ -73,11 +74,6 @@ export class Game {
                     inputManager: this.inputManager,
                     assetFactory: this.assetFactory,
                     missiles: this.missiles,
-                    missileStats: new MissileStats({
-                        hp: 1,
-                        poise: 3,
-                        speed: 1
-                    }),
                     player: this.plane
                 })
             ]
