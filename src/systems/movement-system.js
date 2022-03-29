@@ -8,7 +8,7 @@ export class MovementSystem extends System {
 
     update() {
         this._movingObjects.forEach(object => {
-            object.behavior.execute(object, 1);
+            object.behavior.execute(object, object.stats.speed);
         });
     }
 }

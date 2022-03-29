@@ -37,8 +37,8 @@ export class Game {
             stats: new PlayerRPGStats({
                 hp: 10,
                 poise: 10,
-                speed: 1,
-                turnSpeed: 0.25,
+                speed: 0.2,
+                turnSpeed: 0.05,
                 missileDelay: 1,
                 missileDamange: 1,
                 missileSpeed: 1
