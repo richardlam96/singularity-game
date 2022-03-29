@@ -17,9 +17,9 @@ export class PlayerControls extends Controls {
         } 
         
         if (this._inputManager.keys.arrowLeft) {
-            this._playerObject.model.rotation.y += this.speed / 2;
+            this._playerObject.model.rotation.y += this.speed / 4;
         } else if (this._inputManager.keys.arrowRight) {
-            this._playerObject.model.rotation.y -= this.speed / 2;
+            this._playerObject.model.rotation.y -= this.speed / 4;
         }
     }
 }

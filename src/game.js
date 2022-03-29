@@ -42,8 +42,8 @@ export class Game {
                 model: this.assetFactory.getCube(), 
                 hitboxStrategy: new FullBoxStrategy()
             });
-            let x = RandomGenerator.randIntBetween(-20, 20);
-            let z = RandomGenerator.randIntBetween(-20, 20);
+            let x = RandomGenerator.randIntBetween(-40, 40);
+            let z = RandomGenerator.randIntBetween(-40, 40);
             cube.model.position.set(x, 0, z);
             this.scene.add(cube.model);
             this.obstacles.push(cube);
@@ -67,12 +67,14 @@ export class Game {
         // Initialize Hitbox System.
         this.hitboxSystem = new HitboxSystem({
             player: this.plane,
+            missiles: this.missiles,
             obstacles: this.obstacles
         });
 
         // Initialize the Collision System with the game objects.
         this.collisionSystem = new CollisionSystem({
             player: this.plane,
+            missiles: this.missiles,
             obstacles: this.obstacles
         });
 

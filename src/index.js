@@ -11,7 +11,7 @@ assetFactory.init()
 
     // Initialize the scene.
     const scene = new THREE.Scene();
-    scene.add(new THREE.GridHelper(50, 50));
+    scene.add(new THREE.GridHelper(100, 100));
 
     // Initialize the renderer.
     const renderer = new THREE.WebGLRenderer({antialias: true});

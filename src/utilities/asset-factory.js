@@ -12,7 +12,7 @@ export class AssetFactory {
     async init() {
         this.assets["STAR_FIGHTER"] = await this.gltfLoader.loadAsync(starFighterGLTF);
         this.assets["OBSTACLE"] = new THREE.Mesh(
-            new THREE.BoxGeometry(1, 10, 1),
+            new THREE.BoxGeometry(2, 10, 2),
             new THREE.MeshToonMaterial({color: 0x00ff00})
         );
         this.assets["MISSILE"] = new THREE.Mesh(
