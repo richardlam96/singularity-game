@@ -18,7 +18,7 @@ export class Game {
         this.inputManager = params.inputManager;
 
         this.plane;
-        this.gameObjects = [];
+        this.obstacles = [];
         this.missiles = [];
         this.inputControlsSystem;
         this.collisionSystem;
@@ -46,7 +46,7 @@ export class Game {
             let z = RandomGenerator.randIntBetween(-20, 20);
             cube.model.position.set(x, 0, z);
             this.scene.add(cube.model);
-            this.gameObjects.push(cube);
+            this.obstacles.push(cube);
         }
 
         // Initialize the InputControlsSystem and pair Controls with objects.
@@ -67,13 +67,13 @@ export class Game {
         // Initialize Hitbox System.
         this.hitboxSystem = new HitboxSystem({
             player: this.plane,
-            obstacles: this.gameObjects
+            obstacles: this.obstacles
         });
 
         // Initialize the Collision System with the game objects.
         this.collisionSystem = new CollisionSystem({
             player: this.plane,
-            obstacles: this.gameObjects
+            obstacles: this.obstacles
         });
 
         // Initialize the Movement System for missiles.
