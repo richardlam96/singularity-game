@@ -11,9 +11,7 @@ export class PlayerControls extends Controls {
     execute() {
         if (this._inputManager.keys.arrowUp) {
             this._playerObject.model.translateOnAxis(new Vector3(0, 0, -1), this._playerObject.stats.speed);
-        } else if (this._inputManager.keys.arrowDown) {
-            this._playerObject.model.translateOnAxis(new Vector3(0, 0, 1), this._playerObject.stats.speed);
-        } 
+        }
         
         if (this._inputManager.keys.arrowLeft) {
             this._playerObject.model.rotation.y += this._playerObject.stats.turnSpeed;
