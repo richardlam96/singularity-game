@@ -3,9 +3,11 @@ import { PlayerControls } from "./controls/player-controls";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
+import { UISystem } from "./systems/ui-system";
 import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerRPGStats } from "./game-objects/rpg-stats";
+import { PlayerHealthUI } from './ui/player-health';
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
@@ -25,6 +27,7 @@ export class Game {
         this.collisionSystem;
         this.hitboxSystem;
         this.behaviorSystem;
+        this.uiSystem;
 
         this._init();
     }
@@ -65,6 +68,13 @@ export class Game {
             this.obstacles.push(cube);
         }
 
+        // Initialize UI Components and System.
+        let playerHealth = new PlayerHealthUI();
+        this.uiSystem = new UISystem({
+            player: this.player,
+            healthUI: playerHealth
+        });
+
         // Initialize the InputControlsSystem and pair Controls with objects.
         this.inputControlsSystem = new InputControlsSystem({
             inputManager: this.inputManager,
@@ -104,6 +114,7 @@ export class Game {
         this.hitboxSystem.update();
         this.collisionSystem.update();
         this.behaviorSystem.update();
+        this.uiSystem.update();
     }
 
     render = (timeElapsed) => {
