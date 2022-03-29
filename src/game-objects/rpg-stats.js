@@ -21,5 +21,6 @@ export class PlayerRPGStats extends RPGStats {
         this.missileDamage = params.missileDamage;
         this.missileSpeed = params.missileSpeed;
         this.missileHealth = params.missileHealth;
+        this.difficulty = params.difficulty;
     }
 }

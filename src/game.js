@@ -18,7 +18,7 @@ export class Game {
         this.assetFactory = params.assetFactory;
         this.inputManager = params.inputManager;
 
-        this.plane;
+        this.player;
         this.obstacles = [];
         this.missiles = [];
         this.inputControlsSystem;
@@ -31,7 +31,7 @@ export class Game {
 
     _init() {
         // Initialize player plane and obstacles.
-        this.plane = new GameObject({
+        this.player = new GameObject({
             model: this.assetFactory.getPlane(), 
             hitboxStrategy: new HalfDepthStrategy(),
             stats: new PlayerRPGStats({
@@ -42,19 +42,20 @@ export class Game {
                 missileDelay: 1,
                 missileHealth: 1,
                 missileDamage: 1,
-                missileSpeed: 1
+                missileSpeed: 1,
+                difficulty: 3
             })
         });
-        this.scene.add(this.plane.model);
-        this.camera.setTarget(this.plane.model);
+        this.scene.add(this.player.model);
+        this.camera.setTarget(this.player.model);
 
         for (let _ = 0; _ < 10; _++) {
             let cube = new GameObject({
                 model: this.assetFactory.getCube(), 
                 hitboxStrategy: new FullBoxStrategy(),
                 stats: new RPGStats({
-                    hp: 3,
-                    poise: 3
+                    hp: this.player.stats.difficulty,
+                    poise: this.player.stats.difficulty
                 })
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
@@ -68,27 +69,27 @@ export class Game {
         this.inputControlsSystem = new InputControlsSystem({
             inputManager: this.inputManager,
             controls: [
-                new PlayerControls(this.inputManager, this.plane),
+                new PlayerControls(this.inputManager, this.player),
                 new MissileControls({
                     scene: this.scene,
                     inputManager: this.inputManager,
                     assetFactory: this.assetFactory,
                     missiles: this.missiles,
-                    player: this.plane
+                    player: this.player
                 })
             ]
         });
 
         // Initialize Hitbox System.
         this.hitboxSystem = new HitboxSystem({
-            player: this.plane,
+            player: this.player,
             missiles: this.missiles,
             obstacles: this.obstacles
         });
 
         // Initialize the Collision System with the game objects.
         this.collisionSystem = new CollisionSystem({
-            player: this.plane,
+            player: this.player,
             missiles: this.missiles,
             obstacles: this.obstacles
         });
