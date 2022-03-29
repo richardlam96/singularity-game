@@ -1,6 +1,6 @@
 import { System } from './system';
 
-export class MovementSystem extends System {
+export class BehaviorSystem extends System {
     constructor(movingObjects) {
         super();
         this._movingObjects = movingObjects;

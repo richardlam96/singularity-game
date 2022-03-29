@@ -3,7 +3,7 @@ import { PlayerControls } from "./controls/player-controls";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
-import { MovementSystem } from "./systems/movement-system";
+import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerRPGStats, MissileStats } from "./game-objects/rpg-stats";
 import { RandomGenerator } from "./utilities/random-generator";
@@ -24,7 +24,7 @@ export class Game {
         this.inputControlsSystem;
         this.collisionSystem;
         this.hitboxSystem;
-        this.movementSystem;
+        this.behaviorSystem;
 
         this._init();
     }
@@ -97,8 +97,8 @@ export class Game {
             obstacles: this.obstacles
         });
 
-        // Initialize the Movement System for missiles.
-        this.movementSystem = new MovementSystem(this.missiles);
+        // Initialize the Behavior System for missiles.
+        this.behaviorSystem = new BehaviorSystem(this.missiles);
     }
 
     update(timeElapsed) {
@@ -106,7 +106,7 @@ export class Game {
         this.inputControlsSystem.update(timeElapsed);
         this.hitboxSystem.update();
         this.collisionSystem.update();
-        this.movementSystem.update();
+        this.behaviorSystem.update();
     }
 
     render = (timeElapsed) => {
