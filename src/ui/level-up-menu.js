@@ -14,4 +14,8 @@ export class LevelUpMenuUI {
         newMenuOption.onclick = () => { callback(args[0]); };
         this._getList().appendChild(newMenuOption);
     }
+
+    clean() {
+        document.querySelector(this.optionsListLocator).innerHTML = '';
+    }
 }

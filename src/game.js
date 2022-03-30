@@ -46,19 +46,36 @@ export class Game {
         this._init();
     }
 
+    _initGameStats() {
+        this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
+    }
+
     _init() {
         this._initGameStats();
         this.start(this.currentPlaythroughStats);
     }
 
-    _initGameStats() {
-        this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
+    startNextLevel = (playthroughStats) => {
+        this.clean();
+        playthroughStats.difficulty += 1;
+        this.start(playthroughStats);
     }
 
     start(playthroughStats) {
         this._initPlayer(playthroughStats);
         this._initObstacles(playthroughStats);
         this._initSystems(playthroughStats);
+    }
+
+    clean() {
+        this.player.model.removeFromParent();
+        this.obstacles.forEach(obstacle => obstacle.model.removeFromParent());
+        this.missiles.forEach(missile => missile.model.removeFromParent());
+        this.uiSystem.clean();
+
+        this.player = null;
+        this.obstacles = [];
+        this.missiles = [];
     }
 
     _initPlayer(playthroughStats) {
@@ -100,7 +117,8 @@ export class Game {
         this.uiSystem = new UISystem({
             stats: playthroughStats,
             healthUI: new PlayerHealthUI(),
-            levelUpUI: new LevelUpMenuUI()
+            levelUpUI: new LevelUpMenuUI(),
+            onClick: this.startNextLevel
         });
 
         // Initialize the InputControlsSystem and pair Controls with objects.

@@ -6,6 +6,7 @@ export class UISystem extends System {
         this.stats = params.stats;
         this.healthUI = params.healthUI;
         this.levelUpUI = params.levelUpUI;
+        this.onClick = params.onClick;
         this._init();
     }
 
@@ -15,8 +16,8 @@ export class UISystem extends System {
 
     addLevelOptions() {
         // Basic callbacks for incrementing or decrementing a stat.
-        let incrementStat = (statName) => { this.stats[statName] += 1; }
-        let decrementStat = (statName) => { this.stats[statName] -= 0.1; }
+        let incrementStat = (statName) => { this.stats[statName] += 1; this.onClick(this.stats); }
+        let decrementStat = (statName) => { this.stats[statName] -= 0.1; this.onClick(this.stats); }
 
         for (const [attr, value] of Object.entries(this.stats)) {
             let buttonText = attr + ' - ' + value;
@@ -26,6 +27,11 @@ export class UISystem extends System {
                 this.levelUpUI.addMenuOption(buttonText, incrementStat, attr);
             }
         }
+    }
+
+    clean() {
+        this.healthUI.clean();
+        this.levelUpUI.clean();
     }
 
     update() {
