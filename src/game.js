@@ -48,39 +48,43 @@ export class Game {
 
     _init() {
         this._initGameStats();
-        this._initPlayer();
-        this._initObstacles();
-        this._initSystems();
+        this.start(this.currentPlaythroughStats);
     }
 
     _initGameStats() {
         this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
     }
 
-    _initPlayer() {
+    start(playthroughStats) {
+        this._initPlayer(playthroughStats);
+        this._initObstacles(playthroughStats);
+        this._initSystems(playthroughStats);
+    }
+
+    _initPlayer(playthroughStats) {
         // Initialize player plane and obstacles.
         this.player = new GameObject({
             model: this.assetFactory.getPlane(), 
             hitboxStrategy: new HalfDepthStrategy(),
             stats: new PlayerObjectStats({
-                hp: this.currentPlaythroughStats.hp,
-                poise: this.currentPlaythroughStats.poise,
-                speed: this.currentPlaythroughStats.speed,
-                turnSpeed: this.currentPlaythroughStats.turnSpeed
+                hp: playthroughStats.hp,
+                poise: playthroughStats.poise,
+                speed: playthroughStats.speed,
+                turnSpeed: playthroughStats.turnSpeed
             })
         });
         this.scene.add(this.player.model);
         this.camera.setTarget(this.player.model);
     }
 
-    _initObstacles() {
+    _initObstacles(playthroughStats) {
         for (let _ = 0; _ < 10; _++) {
             let cube = new GameObject({
                 model: this.assetFactory.getCube(), 
                 hitboxStrategy: new FullBoxStrategy(),
                 stats: new RPGStats({
-                    hp: this.currentPlaythroughStats.difficulty,
-                    poise: this.currentPlaythroughStats.difficulty
+                    hp: playthroughStats.difficulty,
+                    poise: playthroughStats.difficulty
                 })
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
@@ -91,10 +95,10 @@ export class Game {
         }
     }
 
-    _initSystems() {
+    _initSystems(playthroughStats) {
         // Initialize UI Components and System.
         let playerHealth = new PlayerHealthUI();
-        let levelUpMenu = new LevelUpMenuUI(this.currentPlaythroughStats);
+        let levelUpMenu = new LevelUpMenuUI(playthroughStats);
         this.uiSystem = new UISystem({
             player: this.player,
             healthUI: playerHealth
@@ -111,10 +115,10 @@ export class Game {
                     assetFactory: this.assetFactory,
                     missiles: this.missiles,
                     missileStats: {
-                        hp: this.currentPlaythroughStats.missileHealth,
-                        poise: this.currentPlaythroughStats.missileDamage,
-                        speed: this.currentPlaythroughStats.missileSpeed,
-                        delay: this.currentPlaythroughStats.missileDelay
+                        hp: playthroughStats.missileHealth,
+                        poise: playthroughStats.missileDamage,
+                        speed: playthroughStats.missileSpeed,
+                        delay: playthroughStats.missileDelay
                     },
                     player: this.player
                 })
