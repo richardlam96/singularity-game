@@ -38,5 +38,6 @@ assetFactory.init()
         assetFactory,
         inputManager
     });
+    game.startNewGame();
     game.render();
 });

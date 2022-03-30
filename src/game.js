@@ -42,15 +42,13 @@ export class Game {
         this.hitboxSystem;
         this.behaviorSystem;
         this.uiSystem;
-
-        this._init();
     }
 
     _initGameStats() {
         this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
     }
 
-    _init() {
+    startNewGame() {
         this._initGameStats();
         this.start(this.currentPlaythroughStats);
     }
