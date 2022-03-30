@@ -12,17 +12,26 @@ export class UISystem extends System {
 
     _init() {
         this.addLevelOptions();
+        this.hideEndBanner();
+    }
+
+    hideEndBanner() {
+        document.querySelector("div[id='end-game-banner']").style.display = "none";
+    }
+
+    showEndBanner() {
+        document.querySelector("div[id='end-game-banner']").style.display = "flex";
     }
 
     addLevelOptions() {
         let incrementStat = (statName, amount) => { 
             let newValue = this.stats[statName] + amount;
-            this.stats[statName] = Math.round(newValue * 100) / 100;
+            this.stats[statName] = Math.round(newValue * 1000) / 1000;
             this.onClick(this.stats); 
         };
         let decrementStat = (statName, amount) => { 
             let newValue = this.stats[statName] - amount;
-            let roundedValue = Math.round(newValue * 100) / 100;
+            let roundedValue = Math.round(newValue * 1000) / 1000;
             this.stats[statName] = Math.max(0, roundedValue);
             this.onClick(this.stats); 
         };

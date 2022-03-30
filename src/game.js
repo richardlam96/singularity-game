@@ -76,6 +76,15 @@ export class Game {
         this.missiles = [];
     }
 
+    showEndgame() {
+        this.uiSystem.showEndBanner();
+    }
+
+    end() {
+        this.clean();
+        this.startNewGame();
+    }
+
     _initPlayer(playthroughStats) {
         // Initialize player plane and obstacles.
         this.player = new GameObject({

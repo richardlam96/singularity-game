@@ -17,6 +17,20 @@
         display: flex;
         flex-direction: column;
       }
+      div#end-game-banner {
+        color: red;
+        background-color: black;
+        border-top: 1px solid red;
+        border-bottom: 1px solid red;
+        height: 30%;
+        width: 100%;
+        position: absolute;
+        top: 40%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 60px;
+      }
 		</style>
   </head>
 
@@ -28,6 +42,7 @@
         <div id="level-up-menu-options"></div>
       </div>
     </div>
+    <div id="end-game-banner"><span>GAME OVER</span></div>
     <script src='./bundle.js'></script>
   </body>
 </html>
