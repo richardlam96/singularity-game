@@ -11,23 +11,20 @@ export class MissileControls extends Controls {
         this._inputManager = params.inputManager;
         this._assetFactory = params.assetFactory;
         this._missiles = params.missiles;
+        this._missileStats = params.missileStats;
         this._player = params.player;
         this._lastMissileTime = 0;
     }
 
     execute(timeElapsed) {
-        let readyToFire = (timeElapsed - this._lastMissileTime) > this._player.stats.missileDelay;
+        let readyToFire = (timeElapsed - this._lastMissileTime) > this._missileStats.delay;
 
         if (this._inputManager.keys.spacebar && readyToFire) {
             let newMissile = new MovingObject({
                 model: this._assetFactory.getMissile(),
                 hitboxStrategy: new FullBoxStrategy(), // these can just have one ref.
                 behavior: new MoveForwardBehavior(),
-                stats: new MissileStats({
-                    hp: this._player.stats.missileHealth,
-                    poise: this._player.stats.missileDamage,
-                    speed: this._player.stats.missileSpeed
-                })
+                stats: new MissileStats(this._missileStats)
             });
             newMissile.model.position.copy(this._player.model.position);
             newMissile.model.rotation.copy(this._player.model.rotation);

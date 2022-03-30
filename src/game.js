@@ -6,11 +6,23 @@ import { HitboxSystem } from "./systems/hitbox-system";
 import { UISystem } from "./systems/ui-system";
 import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
-import { RPGStats, PlayerRPGStats } from "./game-objects/rpg-stats";
+import { RPGStats, PlayerObjectStats } from "./game-objects/rpg-stats";
 import { PlayerHealthUI } from './ui/player-health';
 import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
+
+const STARTING_STATS = {
+    hp: 10,
+    poise: 10,
+    speed: 0.2,
+    turnSpeed: 0.025,
+    missileDelay: 1,
+    missileHealth: 1,
+    missileDamage: 1,
+    missileSpeed: 1,
+    difficulty: 3
+};
 
 export class Game {
     constructor(params) {
@@ -21,6 +33,7 @@ export class Game {
         this.assetFactory = params.assetFactory;
         this.inputManager = params.inputManager;
 
+        this.currentPlaythroughStats;
         this.player;
         this.obstacles = [];
         this.missiles = [];
@@ -34,9 +47,14 @@ export class Game {
     }
 
     _init() {
+        this._initGameStats();
         this._initPlayer();
         this._initObstacles();
         this._initSystems();
+    }
+
+    _initGameStats() {
+        this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
     }
 
     _initPlayer() {
@@ -44,16 +62,11 @@ export class Game {
         this.player = new GameObject({
             model: this.assetFactory.getPlane(), 
             hitboxStrategy: new HalfDepthStrategy(),
-            stats: new PlayerRPGStats({
-                hp: 10,
-                poise: 10,
-                speed: 0.2,
-                turnSpeed: 0.025,
-                missileDelay: 1,
-                missileHealth: 1,
-                missileDamage: 1,
-                missileSpeed: 1,
-                difficulty: 3
+            stats: new PlayerObjectStats({
+                hp: this.currentPlaythroughStats.hp,
+                poise: this.currentPlaythroughStats.poise,
+                speed: this.currentPlaythroughStats.speed,
+                turnSpeed: this.currentPlaythroughStats.turnSpeed
             })
         });
         this.scene.add(this.player.model);
@@ -66,8 +79,8 @@ export class Game {
                 model: this.assetFactory.getCube(), 
                 hitboxStrategy: new FullBoxStrategy(),
                 stats: new RPGStats({
-                    hp: this.player.stats.difficulty,
-                    poise: this.player.stats.difficulty
+                    hp: this.currentPlaythroughStats.difficulty,
+                    poise: this.currentPlaythroughStats.difficulty
                 })
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
@@ -97,6 +110,12 @@ export class Game {
                     inputManager: this.inputManager,
                     assetFactory: this.assetFactory,
                     missiles: this.missiles,
+                    missileStats: {
+                        hp: this.currentPlaythroughStats.missileHealth,
+                        poise: this.currentPlaythroughStats.missileDamage,
+                        speed: this.currentPlaythroughStats.missileSpeed,
+                        delay: this.currentPlaythroughStats.missileDelay
+                    },
                     player: this.player
                 })
             ]

@@ -9,18 +9,18 @@ export class MissileStats extends RPGStats {
     constructor(params) {
         super(params);
         this.speed = params.speed;
-    }
+        // this.missileDamage = params.missileDamage;
+        // this.missileSpeed = params.missileSpeed;
+        // this.missileHealth = params.missileHealth;
+ }
 }
 
-export class PlayerRPGStats extends RPGStats {
+export class PlayerObjectStats extends RPGStats {
     constructor(params) {
         super(params);
         this.speed = params.speed;
         this.turnSpeed = params.turnSpeed;
-        this.missileDelay = params.missileDelay;
-        this.missileDamage = params.missileDamage;
-        this.missileSpeed = params.missileSpeed;
-        this.missileHealth = params.missileHealth;
-        this.difficulty = params.difficulty;
     }
 }
+
+// Optionally, make a PlaythroughStats to store all.
