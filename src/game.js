@@ -94,7 +94,7 @@ export class Game {
     _initSystems() {
         // Initialize UI Components and System.
         let playerHealth = new PlayerHealthUI();
-        let levelUpMenu = new LevelUpMenuUI(this.player.stats);
+        let levelUpMenu = new LevelUpMenuUI(this.currentPlaythroughStats);
         this.uiSystem = new UISystem({
             player: this.player,
             healthUI: playerHealth

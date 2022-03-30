@@ -1,17 +1,17 @@
 export class LevelUpMenuUI {
-    constructor(stats) {
+    constructor(options) {
         this.locator = "div[id='level-up-menu']";
         this.optionsListLocator = "div[id='level-up-menu-options']";
-        this._playerStats = stats;
+        this._options = options;
         this._init();
     }
 
     _init() {
-        for (const [attr, value] of Object.entries(this._playerStats)) {
+        for (const [attr, value] of Object.entries(this._options)) {
             let buttonText = attr + ' - ' + value;
             let onClick = () => {
-                this._playerStats[attr] += 1;
-                console.log(attr, this._playerStats[attr]);
+                this._options[attr] += 1;
+                console.log(attr, this._options[attr]);
             }
             this.addMenuOption(buttonText, onClick);
         }
