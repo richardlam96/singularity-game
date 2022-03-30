@@ -9,7 +9,10 @@ export class LevelUpMenuUI {
     _init() {
         for (const [attr, value] of Object.entries(this._playerStats)) {
             let buttonText = attr + ' - ' + value;
-            let onClick = () => this._playerStats[attr] += 1;
+            let onClick = () => {
+                this._playerStats[attr] += 1;
+                console.log(attr, this._playerStats[attr]);
+            }
             this.addMenuOption(buttonText, onClick);
         }
     }
