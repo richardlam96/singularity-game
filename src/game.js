@@ -97,11 +97,10 @@ export class Game {
 
     _initSystems(playthroughStats) {
         // Initialize UI Components and System.
-        let playerHealth = new PlayerHealthUI();
-        let levelUpMenu = new LevelUpMenuUI(playthroughStats);
         this.uiSystem = new UISystem({
-            player: this.player,
-            healthUI: playerHealth
+            stats: playthroughStats,
+            healthUI: new PlayerHealthUI(),
+            levelUpUI: new LevelUpMenuUI()
         });
 
         // Initialize the InputControlsSystem and pair Controls with objects.
