@@ -34,6 +34,12 @@ export class Game {
     }
 
     _init() {
+        this._initPlayer();
+        this._initObstacles();
+        this._initSystems();
+    }
+
+    _initPlayer() {
         // Initialize player plane and obstacles.
         this.player = new GameObject({
             model: this.assetFactory.getPlane(), 
@@ -52,7 +58,9 @@ export class Game {
         });
         this.scene.add(this.player.model);
         this.camera.setTarget(this.player.model);
+    }
 
+    _initObstacles() {
         for (let _ = 0; _ < 10; _++) {
             let cube = new GameObject({
                 model: this.assetFactory.getCube(), 
@@ -68,7 +76,9 @@ export class Game {
             this.scene.add(cube.model);
             this.obstacles.push(cube);
         }
+    }
 
+    _initSystems() {
         // Initialize UI Components and System.
         let playerHealth = new PlayerHealthUI();
         let levelUpMenu = new LevelUpMenuUI(this.player.stats);
