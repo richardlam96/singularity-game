@@ -6,6 +6,7 @@ export class CollisionSystem extends System {
         this.player = params.player;
         this.missiles = params.missiles;
         this.obstacles = params.obstacles;
+        this.onPlayerDeath = params.onPlayerDeath;
     }
 
     _handleObjectCollision(objectA, objectB) {

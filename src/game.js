@@ -7,6 +7,7 @@ import { UISystem } from "./systems/ui-system";
 import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerObjectStats } from "./game-objects/rpg-stats";
+import { EndGameBanner } from "./ui/end-game-banner";
 import { PlayerHealthUI } from './ui/player-health';
 import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
@@ -80,7 +81,7 @@ export class Game {
         this.uiSystem.showEndBanner();
     }
 
-    end() {
+    end = () => {
         this.clean();
         this.startNewGame();
     }
@@ -125,7 +126,9 @@ export class Game {
             stats: playthroughStats,
             healthUI: new PlayerHealthUI(),
             levelUpUI: new LevelUpMenuUI(),
-            onClick: this.startNextLevel
+            endgameBanner: new EndGameBanner(),
+            onLevelUp: this.startNextLevel,
+            onRestart: this.end
         });
 
         // Initialize the InputControlsSystem and pair Controls with objects.
@@ -160,7 +163,8 @@ export class Game {
         this.collisionSystem = new CollisionSystem({
             player: this.player,
             missiles: this.missiles,
-            obstacles: this.obstacles
+            obstacles: this.obstacles,
+            onPlayerDeath: this.showEndgame
         });
 
         // Initialize the Behavior System for missiles.
@@ -168,12 +172,16 @@ export class Game {
     }
 
     update(timeElapsed) {
-        this.camera.update();
-        this.inputControlsSystem.update(timeElapsed);
-        this.hitboxSystem.update();
-        this.collisionSystem.update();
-        this.behaviorSystem.update();
-        this.uiSystem.update();
+        if (this.player.stats.hp <= 0) {
+            this.showEndgame();
+        } else { 
+            this.camera.update();
+            this.inputControlsSystem.update(timeElapsed);
+            this.hitboxSystem.update();
+            this.collisionSystem.update();
+            this.behaviorSystem.update();
+            this.uiSystem.update();
+        }
     }
 
     render = (timeElapsed) => {

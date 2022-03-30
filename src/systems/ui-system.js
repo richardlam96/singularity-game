@@ -6,34 +6,32 @@ export class UISystem extends System {
         this.stats = params.stats;
         this.healthUI = params.healthUI;
         this.levelUpUI = params.levelUpUI;
-        this.onClick = params.onClick;
+        this.endgameBanner = params.endgameBanner;
+        this.onLevelUp = params.onLevelUp;
+        this.onRestart = params.onRestart;
         this._init();
     }
 
     _init() {
         this.addLevelOptions();
-        this.hideEndBanner();
-    }
-
-    hideEndBanner() {
-        document.querySelector("div[id='end-game-banner']").style.display = "none";
+        this.setRestartCallback();
     }
 
     showEndBanner() {
-        document.querySelector("div[id='end-game-banner']").style.display = "flex";
+        this.endgameBanner.show();
     }
 
     addLevelOptions() {
         let incrementStat = (statName, amount) => { 
             let newValue = this.stats[statName] + amount;
             this.stats[statName] = Math.round(newValue * 1000) / 1000;
-            this.onClick(this.stats); 
+            this.onLevelUp(this.stats); 
         };
         let decrementStat = (statName, amount) => { 
             let newValue = this.stats[statName] - amount;
             let roundedValue = Math.round(newValue * 1000) / 1000;
             this.stats[statName] = Math.max(0, roundedValue);
-            this.onClick(this.stats); 
+            this.onLevelUp(this.stats); 
         };
 
         let levelIncrementCallbacks = {
@@ -56,9 +54,14 @@ export class UISystem extends System {
         }
     }
 
+    setRestartCallback() {
+        this.endgameBanner.setRestart(this.onRestart);
+    }
+
     clean() {
         this.healthUI.clean();
         this.levelUpUI.clean();
+        this.endgameBanner.hide();
     }
 
     update() {
