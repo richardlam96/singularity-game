@@ -4,16 +4,30 @@
     <meta charset="UTF-8">
     <title>Test ECS</title>
     <style>
-			body { margin: 0; }
-      div#player-health-bar { 
-        color: white;
+			body { 
+        margin: 0; 
+      }
+      div#player-ui {
         position: absolute;
+        display: flex;
+        flex-direction: column;
+        color: white;
+      }
+      div#level-up-menu-options {
+        display: flex;
+        flex-direction: column;
       }
 		</style>
   </head>
 
   <body>
-    <div id="player-health-bar">Player Health: <span id="player-health"></span></div>
+    <div id="player-ui">
+      <div id="player-health-bar">Player Health: <span id="player-health"></span></div>
+      <div id="level-up-menu">
+        Level Up!
+        <div id="level-up-menu-options"></div>
+      </div>
+    </div>
     <script src='./bundle.js'></script>
   </body>
 </html>

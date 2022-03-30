@@ -8,6 +8,7 @@ import { BehaviorSystem } from "./systems/behavior-system";
 import { GameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerRPGStats } from "./game-objects/rpg-stats";
 import { PlayerHealthUI } from './ui/player-health';
+import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 
@@ -70,6 +71,7 @@ export class Game {
 
         // Initialize UI Components and System.
         let playerHealth = new PlayerHealthUI();
+        let levelUpMenu = new LevelUpMenuUI(this.player.stats);
         this.uiSystem = new UISystem({
             player: this.player,
             healthUI: playerHealth
