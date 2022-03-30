@@ -15,17 +15,35 @@ export class UISystem extends System {
     }
 
     addLevelOptions() {
+        let incrementStat = (statName, amount) => { 
+            let newValue = this.stats[statName] + amount;
+            this.stats[statName] = Math.round(newValue * 100) / 100;
+            this.onClick(this.stats); 
+        };
+        let decrementStat = (statName, amount) => { 
+            let newValue = this.stats[statName] - amount;
+            let roundedValue = Math.round(newValue * 100) / 100;
+            this.stats[statName] = Math.max(0, roundedValue);
+            this.onClick(this.stats); 
+        };
+
+        let levelIncrementCallbacks = {
+            'hp': () => incrementStat('hp', 1),
+            'poise': () => incrementStat('poise', 1),
+            'speed': () => incrementStat('speed', 0.1),
+            'turnSpeed': () => incrementStat('turnSpeed', 0.025),
+            'missileDelay': () => decrementStat('missileDelay', 0.02),
+            'missileHealth': () => incrementStat('missileHealth', 1),
+            'missileDamage': () => incrementStat('missileDamage', 1),
+            'missileSpeed': () => incrementStat('missileSpeed', 1)
+        };
+
         // Basic callbacks for incrementing or decrementing a stat.
-        let incrementStat = (statName) => { this.stats[statName] += 1; this.onClick(this.stats); }
-        let decrementStat = (statName) => { this.stats[statName] -= 0.1; this.onClick(this.stats); }
 
         for (const [attr, value] of Object.entries(this.stats)) {
             let buttonText = attr + ' - ' + value;
-            if (attr === 'missileDelay') {
-                this.levelUpUI.addMenuOption(buttonText, decrementStat, attr);
-            } else {
-                this.levelUpUI.addMenuOption(buttonText, incrementStat, attr);
-            }
+            let callback = levelIncrementCallbacks[attr];
+            this.levelUpUI.addMenuOption(buttonText, callback);
         }
     }
 

@@ -8,10 +8,10 @@ export class LevelUpMenuUI {
         return document.querySelector(this.optionsListLocator);
     }
 
-    addMenuOption(name, callback, ...args) {
+    addMenuOption(name, callback) {
         let newMenuOption = document.createElement('button');
         newMenuOption.textContent = name;
-        newMenuOption.onclick = () => { callback(args[0]); };
+        newMenuOption.onclick = () => { callback(); };
         this._getList().appendChild(newMenuOption);
     }
 
