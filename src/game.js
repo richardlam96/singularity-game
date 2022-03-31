@@ -95,6 +95,8 @@ export class Game {
 
     _initPlayer(playthroughStats) {
         let defaultHitbox = new THREE.Box3;
+        let playerControls = new PlayerControls(this.inputManager);
+
         // Initialize player plane and obstacles.
         this.player = new ControlledObject({
             model: this.assetFactory.getPlane(), 
@@ -105,8 +107,9 @@ export class Game {
                 speed: playthroughStats.speed,
                 turnSpeed: playthroughStats.turnSpeed
             }),
-            inputControls: new PlayerControls(this.inputManager, this.player)
+            inputControls: playerControls
         });
+        playerControls.setParent(this.player);
         this.scene.add(this.player.model);
         this.camera.setTarget(this.player.model);
     }
@@ -143,9 +146,9 @@ export class Game {
 
         // Initialize the InputControlsSystem and pair Controls with objects.
         this.inputControlsSystem = new InputControlsSystem({
+            player: this.player,
             inputManager: this.inputManager,
             controls: [
-                new PlayerControls(this.inputManager, this.player),
                 new MissileControls({
                     scene: this.scene,
                     inputManager: this.inputManager,
