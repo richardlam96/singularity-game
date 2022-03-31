@@ -1,3 +1,4 @@
+import { Box3 } from 'three';
 import { MoveForwardBehavior } from '../behaviors/move-forward-behavior';
 import { Controls } from './controls';
 import { MovingObject } from '../game-objects/moving-object';
@@ -22,7 +23,7 @@ export class MissileControls extends Controls {
         if (this._inputManager.keys.spacebar && readyToFire) {
             let newMissile = new MovingObject({
                 model: this._assetFactory.getMissile(),
-                hitboxStrategy: new FullBoxStrategy(), // these can just have one ref.
+                hitbox: new Box3(), // these can just have one ref.
                 behavior: new MoveForwardBehavior(),
                 stats: new MissileStats(this._missileStats)
             });

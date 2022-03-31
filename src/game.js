@@ -12,6 +12,9 @@ import { PlayerHealthUI } from './ui/player-health';
 import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
+import * as THREE from "three";
+import { MovingObject } from "./game-objects/moving-object";
+import { ControlledObject } from "./game-objects/controlled-object";
 
 const STARTING_STATS = {
     hp: 10,
@@ -91,16 +94,18 @@ export class Game {
     }
 
     _initPlayer(playthroughStats) {
+        let defaultHitbox = new THREE.Box3;
         // Initialize player plane and obstacles.
-        this.player = new BaseGameObject({
+        this.player = new ControlledObject({
             model: this.assetFactory.getPlane(), 
-            hitboxStrategy: new HalfDepthStrategy(),
+            hitbox: defaultHitbox,
             stats: new PlayerObjectStats({
                 hp: playthroughStats.hp,
                 poise: playthroughStats.poise,
                 speed: playthroughStats.speed,
                 turnSpeed: playthroughStats.turnSpeed
-            })
+            }),
+            inputControls: new PlayerControls(this.inputManager, this.player)
         });
         this.scene.add(this.player.model);
         this.camera.setTarget(this.player.model);
@@ -108,9 +113,9 @@ export class Game {
 
     _initObstacles(playthroughStats) {
         for (let _ = 0; _ < 10; _++) {
-            let cube = new BaseGameObject({
+            let cube = new MovingObject({
                 model: this.assetFactory.getCube(), 
-                hitboxStrategy: new FullBoxStrategy(),
+                hitbox: new THREE.Box3(),
                 stats: new RPGStats({
                     hp: playthroughStats.difficulty,
                     poise: playthroughStats.difficulty

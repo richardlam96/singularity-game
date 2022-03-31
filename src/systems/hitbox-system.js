@@ -1,4 +1,5 @@
 import { System } from "./system";
+import { HalfDepthStrategy, FullBoxStrategy } from "../strategy/hitbox-strategies";
 
 export class HitboxSystem extends System {
     constructor(params) {
@@ -6,17 +7,18 @@ export class HitboxSystem extends System {
         this.player = params.player;
         this.missiles = params.missiles;
         this.obstacles = params.obstacles;
+        this.hitboxStrategy = new FullBoxStrategy();
     }
 
     update() { 
         this.obstacles.forEach(obstacle => {
-            obstacle.hitboxStrategy.execute(obstacle);
+            this.hitboxStrategy.execute(obstacle);
         });
 
         this.missiles.forEach(missile => {
-            missile.hitboxStrategy.execute(missile);
+            this.hitboxStrategy.execute(missile);
         });
 
-        this.player.hitboxStrategy.execute(this.player);
+        this.hitboxStrategy.execute(this.player);
     }
 }
