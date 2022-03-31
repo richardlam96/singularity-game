@@ -5,7 +5,7 @@ import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { UISystem } from "./systems/ui-system";
 import { BehaviorSystem } from "./systems/behavior-system";
-import { GameObject } from "./game-objects/game-object";
+import { BaseGameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerObjectStats } from "./game-objects/rpg-stats";
 import { EndGameBanner } from "./ui/end-game-banner";
 import { PlayerHealthUI } from './ui/player-health';
@@ -92,7 +92,7 @@ export class Game {
 
     _initPlayer(playthroughStats) {
         // Initialize player plane and obstacles.
-        this.player = new GameObject({
+        this.player = new BaseGameObject({
             model: this.assetFactory.getPlane(), 
             hitboxStrategy: new HalfDepthStrategy(),
             stats: new PlayerObjectStats({
@@ -108,7 +108,7 @@ export class Game {
 
     _initObstacles(playthroughStats) {
         for (let _ = 0; _ < 10; _++) {
-            let cube = new GameObject({
+            let cube = new BaseGameObject({
                 model: this.assetFactory.getCube(), 
                 hitboxStrategy: new FullBoxStrategy(),
                 stats: new RPGStats({
