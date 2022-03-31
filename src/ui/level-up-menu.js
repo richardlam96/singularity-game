@@ -4,6 +4,10 @@ export class LevelUpMenuUI {
         this.optionsListLocator = "div[id='level-up-menu-options']";
     }
 
+    _getMenu () {
+        return document.querySelector(this.locator);
+    }
+
     _getList() {
         return document.querySelector(this.optionsListLocator);
     }
@@ -15,7 +19,15 @@ export class LevelUpMenuUI {
         this._getList().appendChild(newMenuOption);
     }
 
+    show() {
+        this._getMenu().style.display = "block";
+    }
+
+    hide() {
+        this._getMenu().style.display = "none";
+    }
+
     clean() {
-        document.querySelector(this.optionsListLocator).innerHTML = '';
+        this.hide();
     }
 }

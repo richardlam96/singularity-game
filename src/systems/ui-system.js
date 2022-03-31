@@ -3,6 +3,7 @@ import { System } from './system';
 export class UISystem extends System {
     constructor(params) {
         super();
+        this.player = params.player;
         this.stats = params.stats;
         this.healthUI = params.healthUI;
         this.levelUpUI = params.levelUpUI;
@@ -19,6 +20,10 @@ export class UISystem extends System {
 
     showEndBanner() {
         this.endgameBanner.show();
+    }
+
+    showLevelMenu() {
+        this.levelUpUI.show();
     }
 
     addLevelOptions() {
@@ -66,6 +71,6 @@ export class UISystem extends System {
 
     update() {
         // Do we need to have this updated per frame, or can we do this on event?
-        this.healthUI.update(this.stats.hp);
+        this.healthUI.update(this.player.stats.hp);
     }
 }

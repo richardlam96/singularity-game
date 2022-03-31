@@ -60,6 +60,10 @@ export class Game {
         this.start(playthroughStats);
     }
 
+    endCurrentLevel = () => {
+        this.uiSystem.showLevelMenu();
+    }
+
     start(playthroughStats) {
         this._initPlayer(playthroughStats);
         this._initObstacles(playthroughStats);
@@ -123,6 +127,7 @@ export class Game {
     _initSystems(playthroughStats) {
         // Initialize UI Components and System.
         this.uiSystem = new UISystem({
+            player: this.player,
             stats: playthroughStats,
             healthUI: new PlayerHealthUI(),
             levelUpUI: new LevelUpMenuUI(),
@@ -164,7 +169,8 @@ export class Game {
             player: this.player,
             missiles: this.missiles,
             obstacles: this.obstacles,
-            onPlayerDeath: this.showEndgame
+            onPlayerDeath: this.showEndgame,
+            onLevelEnd: this.endCurrentLevel
         });
 
         // Initialize the Behavior System for missiles.

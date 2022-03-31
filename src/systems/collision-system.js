@@ -7,6 +7,7 @@ export class CollisionSystem extends System {
         this.missiles = params.missiles;
         this.obstacles = params.obstacles;
         this.onPlayerDeath = params.onPlayerDeath;
+        this.onLevelEnd = params.onLevelEnd;
     }
 
     _handleObjectCollision(objectA, objectB) {
@@ -40,5 +41,9 @@ export class CollisionSystem extends System {
                 this.obstacles.splice(obstacleIndex, 1);
             }
         });
+
+        if (this.obstacles.length === 0) {
+            this.onLevelEnd();
+        }
     }
 }
