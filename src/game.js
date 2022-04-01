@@ -107,18 +107,6 @@ export class Game {
             }),
             inputControls: new PlayerControls(this.inputManager)
         });
-
-        // {
-        //     model: this.assetFactory.getPlane(), 
-        //     hitbox: defaultHitbox,
-        //     stats: new PlayerObjectStats({
-        //         hp: playthroughStats.hp,
-        //         poise: playthroughStats.poise,
-        //         speed: playthroughStats.speed,
-        //         turnSpeed: playthroughStats.turnSpeed
-        //     }),
-        //     inputControls: playerControls
-        // });
         this.scene.add(this.player.modelComponent.model);
         this.camera.setTarget(this.player.modelComponent.model);
     }
