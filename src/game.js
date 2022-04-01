@@ -105,7 +105,8 @@ export class Game {
                 speed: playthroughStats.speed,
                 turnSpeed: playthroughStats.turnSpeed
             }),
-            inputControls: new PlayerControls(this.inputManager)
+            inputControls: new PlayerControls(this.inputManager),
+            healthbar: new PlayerHealthUI()
         });
         this.scene.add(this.player.modelComponent.model);
         this.camera.setTarget(this.player.modelComponent.model);
@@ -191,7 +192,7 @@ export class Game {
             this.hitboxSystem.update();
             this.collisionSystem.update();
             this.behaviorSystem.update();
-            // this.uiSystem.update();
+            this.uiSystem.update();
         }
     }
 

@@ -64,13 +64,12 @@ export class UISystem extends System {
     }
 
     clean() {
-        this.healthUI.clean();
         this.levelUpUI.clean();
         this.endgameBanner.hide();
     }
 
     update() {
         // Do we need to have this updated per frame, or can we do this on event?
-        this.healthUI.update(this.player.stats.hp);
+        this.player.healthbarComponent.update();
     }
 }

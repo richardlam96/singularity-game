@@ -1,5 +1,8 @@
-export class PlayerHealthUI {
+import { Component } from '../components/component';
+
+export class PlayerHealthUI extends Component {
     constructor() {
+        super();
         this.locator = "span[id='player-health']";
     }
 
@@ -7,7 +10,7 @@ export class PlayerHealthUI {
         document.querySelector(this.locator).innerHTML = '';
     }
 
-    update(number) {
-        document.querySelector(this.locator).innerHTML = number;
+    update() {
+        document.querySelector(this.locator).innerHTML = this._parent.statsComponent.hp;
     }
 }
