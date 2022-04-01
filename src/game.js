@@ -96,7 +96,7 @@ export class Game {
     }
 
     _initPlayer(playthroughStats) {
-        this.player = new ControlledObject({
+        this.player = new LivingObject({
             model: new ModelComponent(this.assetFactory.getPlane()),
             hitbox: new HitboxComponent(new THREE.Box3()),
             stats: new PlayerObjectStats({
