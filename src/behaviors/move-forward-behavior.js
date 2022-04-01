@@ -1,7 +1,9 @@
 import { Behavior } from './behavior';
 
 export class MoveForwardBehavior extends Behavior {
-    execute() {
-        this._parent.modelComponent.model.translateZ(-1 * this._parent.statsComponent.speed);
+    static execute(gameObject) {
+        let model = gameObject.modelComponent.model;
+        let speed = gameObject.statsComponent.speed;
+        model.translateZ(-1 * speed);
     }
 }
