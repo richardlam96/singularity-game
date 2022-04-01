@@ -17,6 +17,7 @@ import { LivingObject } from "./game-objects/living-object";
 import { ControlledObject } from "./game-objects/controlled-object";
 import { Entity } from "./components/entity";
 import { HitboxComponent, ModelComponent } from "./components/game-object-components";
+import { PlayerInputControlsComponent } from "./components/input-controls-components";
 
 const STARTING_STATS = {
     hp: 10,
@@ -105,7 +106,7 @@ export class Game {
                 speed: playthroughStats.speed,
                 turnSpeed: playthroughStats.turnSpeed
             }),
-            inputControls: new PlayerControls(this.inputManager),
+            inputControls: new PlayerInputControlsComponent(),
             healthbar: new PlayerHealthUI()
         });
         this.scene.add(this.player.modelComponent.model);
