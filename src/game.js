@@ -15,6 +15,8 @@ import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies
 import * as THREE from "three";
 import { MovingObject } from "./game-objects/moving-object";
 import { ControlledObject } from "./game-objects/controlled-object";
+import { Entity } from "./components/entity";
+import { HitboxComponent, ModelComponent } from "./components/game-object-components";
 
 const STARTING_STATS = {
     hp: 10,
@@ -94,22 +96,27 @@ export class Game {
     }
 
     _initPlayer(playthroughStats) {
-        let defaultHitbox = new THREE.Box3;
-        let playerControls = new PlayerControls(this.inputManager);
-
-        // Initialize player plane and obstacles.
-        this.player = new ControlledObject({
-            model: this.assetFactory.getPlane(), 
-            hitbox: defaultHitbox,
-            stats: new PlayerObjectStats({
-                hp: playthroughStats.hp,
-                poise: playthroughStats.poise,
-                speed: playthroughStats.speed,
-                turnSpeed: playthroughStats.turnSpeed
-            }),
-            inputControls: playerControls
-        });
-        playerControls.setParent(this.player);
+        this.player = new Entity();
+        this.player.addComponent(new PlayerControls(this.inputManager));
+        this.player.addComponent(new ModelComponent(this.assetFactory.getPlane()));
+        this.player.addComponent(new HitboxComponent(new THREE.Box3()));
+        this.player.addComponent(new PlayerObjectStats({
+            hp: playthroughStats.hp,
+            poise: playthroughStats.poise,
+            speed: playthroughStats.speed,
+            turnSpeed: playthroughStats.turnSpeed
+        }));
+        // {
+        //     model: this.assetFactory.getPlane(), 
+        //     hitbox: defaultHitbox,
+        //     stats: new PlayerObjectStats({
+        //         hp: playthroughStats.hp,
+        //         poise: playthroughStats.poise,
+        //         speed: playthroughStats.speed,
+        //         turnSpeed: playthroughStats.turnSpeed
+        //     }),
+        //     inputControls: playerControls
+        // });
         this.scene.add(this.player.model);
         this.camera.setTarget(this.player.model);
     }
@@ -186,9 +193,9 @@ export class Game {
     }
 
     update(timeElapsed) {
-        if (this.player.stats.hp <= 0) {
+        if (this.player.getComponent('PlayerObjectStats').hp <= 0) {
             this.showEndgame();
-        } else { 
+        } else {
             this.camera.update();
             this.inputControlsSystem.update(timeElapsed);
             this.hitboxSystem.update();

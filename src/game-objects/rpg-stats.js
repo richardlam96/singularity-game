@@ -1,5 +1,8 @@
-export class RPGStats { 
+import { Component } from '../components/component';
+
+export class RPGStats extends Component { 
     constructor(params) {
+        super();
         this.hp = params.hp;
         this.poise = params.poise;
     }
