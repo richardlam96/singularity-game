@@ -13,7 +13,7 @@ import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
 import * as THREE from "three";
-import { MovingObject } from "./game-objects/moving-object";
+import { LivingObject } from "./game-objects/living-object";
 import { ControlledObject } from "./game-objects/controlled-object";
 import { Entity } from "./components/entity";
 import { HitboxComponent, ModelComponent } from "./components/game-object-components";
@@ -192,7 +192,7 @@ export class Game {
             this.hitboxSystem.update();
             this.collisionSystem.update();
             this.behaviorSystem.update();
-            this.uiSystem.update();
+            // this.uiSystem.update();
         }
     }
 

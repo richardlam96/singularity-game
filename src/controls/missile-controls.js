@@ -1,10 +1,10 @@
 import { Box3 } from 'three';
-import { MoveForwardBehavior } from '../behaviors/move-forward-behavior';
 import { Controls } from './controls';
-import { MovingObject } from '../game-objects/moving-object';
+import { LivingObject } from '../game-objects/living-object';
 import { MissileStats } from '../game-objects/rpg-stats';
 import { FullBoxStrategy } from "../strategy/hitbox-strategies";
 import { HitboxComponent, ModelComponent } from '../components/game-object-components';
+import { ControlledObject } from '../game-objects/controlled-object';
 
 export class MissileControls extends Controls {
     constructor(params) {
@@ -19,10 +19,9 @@ export class MissileControls extends Controls {
     }
 
     createMissile() {
-        let newMissile = new MovingObject({
+        let newMissile = new ControlledObject({
             model: new ModelComponent(this._assetFactory.getMissile()),
             hitbox: new HitboxComponent(new Box3()),
-            behavior: new MoveForwardBehavior(),
             stats: new MissileStats(this._missileStats)
         });
         this._missiles.push(newMissile);
