@@ -11,8 +11,8 @@ export class InputControlsSystem extends System {
     update(timeElapsed) {
         this.player.inputControlsComponent.execute();
 
-        // this._controls.forEach(controlSet => {
-        //     controlSet.execute(timeElapsed);
-        // });
+        this._controls.forEach(controlSet => {
+            controlSet.execute(timeElapsed);
+        });
     }
 }
