@@ -119,8 +119,8 @@ export class Game {
         //     }),
         //     inputControls: playerControls
         // });
-        this.scene.add(this.player.model);
-        this.camera.setTarget(this.player.model);
+        this.scene.add(this.player.modelComponent.model);
+        this.camera.setTarget(this.player.modelComponent.model);
     }
 
     _initObstacles(playthroughStats) {
@@ -203,7 +203,7 @@ export class Game {
             this.hitboxSystem.update();
             this.collisionSystem.update();
             this.behaviorSystem.update();
-            this.uiSystem.update();
+            // this.uiSystem.update();
         }
     }
 

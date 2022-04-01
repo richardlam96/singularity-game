@@ -1,6 +1,5 @@
 export class BaseGameObject {
     constructor(params) {
-        console.log('hello', params);
         this.modelComponent = params.model;
         this.hitboxComponent = params.hitbox;
         this.statsComponent = params.stats;
