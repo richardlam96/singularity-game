@@ -1,10 +1,15 @@
-import { Entity } from '../components/entity';
-
-export class BaseGameObject extends Entity {
+export class BaseGameObject {
     constructor(params) {
-        super();
-        this.model = params.model;
-        this.hitbox = params.hitbox;
-        this.stats = params.stats;
+        console.log('hello', params);
+        this.modelComponent = params.model;
+        this.hitboxComponent = params.hitbox;
+        this.statsComponent = params.stats;
+        this._init();
+    }
+    
+    _init = () => {
+        this.modelComponent.setParent(this);
+        this.hitboxComponent.setParent(this);
+        this.statsComponent.setParent(this);
     }
 }

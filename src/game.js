@@ -96,16 +96,18 @@ export class Game {
     }
 
     _initPlayer(playthroughStats) {
-        this.player = new Entity();
-        this.player.addComponent(new PlayerControls(this.inputManager));
-        this.player.addComponent(new ModelComponent(this.assetFactory.getPlane()));
-        this.player.addComponent(new HitboxComponent(new THREE.Box3()));
-        this.player.addComponent(new PlayerObjectStats({
-            hp: playthroughStats.hp,
-            poise: playthroughStats.poise,
-            speed: playthroughStats.speed,
-            turnSpeed: playthroughStats.turnSpeed
-        }));
+        this.player = new ControlledObject({
+            model: new ModelComponent(this.assetFactory.getPlane()),
+            hitbox: new HitboxComponent(new THREE.Box3()),
+            stats: new PlayerObjectStats({
+                hp: playthroughStats.hp,
+                poise: playthroughStats.poise,
+                speed: playthroughStats.speed,
+                turnSpeed: playthroughStats.turnSpeed
+            }),
+            inputControls: new PlayerControls(this.inputManager)
+        });
+
         // {
         //     model: this.assetFactory.getPlane(), 
         //     hitbox: defaultHitbox,
@@ -123,9 +125,9 @@ export class Game {
 
     _initObstacles(playthroughStats) {
         for (let _ = 0; _ < 10; _++) {
-            let cube = new MovingObject({
-                model: this.assetFactory.getCube(), 
-                hitbox: new THREE.Box3(),
+            let cube = new BaseGameObject({
+                model: new ModelComponent(this.assetFactory.getCube()),
+                hitbox: new HitboxComponent(new THREE.Box3()),
                 stats: new RPGStats({
                     hp: playthroughStats.difficulty,
                     poise: playthroughStats.difficulty
@@ -133,8 +135,8 @@ export class Game {
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
             let z = RandomGenerator.randIntBetween(-40, 40);
-            cube.model.position.set(x, 0, z);
-            this.scene.add(cube.model);
+            cube.modelComponent.model.position.set(x, 0, z);
+            this.scene.add(cube.modelComponent.model);
             this.obstacles.push(cube);
         }
     }
@@ -193,7 +195,7 @@ export class Game {
     }
 
     update(timeElapsed) {
-        if (this.player.getComponent('PlayerObjectStats').hp <= 0) {
+        if (this.player.statsComponent.hp <= 0) {
             this.showEndgame();
         } else {
             this.camera.update();
