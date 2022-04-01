@@ -145,23 +145,11 @@ export class Game {
 
         // Initialize the InputControlsSystem and pair Controls with objects.
         this.inputControlsSystem = new InputControlsSystem({
-            player: this.player,
+            scene: this.scene,
             inputManager: this.inputManager,
-            controls: [
-                new MissileControls({
-                    scene: this.scene,
-                    inputManager: this.inputManager,
-                    assetFactory: this.assetFactory,
-                    missiles: this.missiles,
-                    missileStats: {
-                        hp: playthroughStats.missileHealth,
-                        poise: playthroughStats.missileDamage,
-                        speed: playthroughStats.missileSpeed,
-                        delay: playthroughStats.missileDelay
-                    },
-                    player: this.player
-                })
-            ]
+            player: this.player,
+            missiles: this.missiles,
+            assetFactory: this.assetFactory
         });
 
         // Initialize Hitbox System.
