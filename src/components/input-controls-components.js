@@ -3,24 +3,30 @@ import { ShootMissileBehavior } from '../behaviors/attack-behavior';
 import { TurnLeftBehavior, TurnRightBehavior } from '../behaviors/turn-behavior';
 import { Component } from './component';
 
-export class InputControlsComponent extends Component {
+export class ControlsComponent extends Component {
     execute() {}
 }
 
-export class PlayerInputControlsComponent extends InputControlsComponent {
-    execute(assetFactory, inputManager, scene, missiles) {
-        if (inputManager.keys.arrowUp) {
+export class PlayerInputControlsComponent extends ControlsComponent {
+    execute(game) {
+        if (game.inputManager.keys.arrowUp) {
             MoveForwardBehavior.execute(this._parent);
         }
         
-        if (inputManager.keys.arrowLeft) {
+        if (game.inputManager.keys.arrowLeft) {
             TurnLeftBehavior.execute(this._parent);
-        } else if (inputManager.keys.arrowRight) {
+        } else if (game.inputManager.keys.arrowRight) {
             TurnRightBehavior.execute(this._parent);
         }
 
-        if (inputManager.keys.spacebar) {
-            ShootMissileBehavior.execute(this._parent, scene, assetFactory, missiles);
+        if (game.inputManager.keys.spacebar) {
+            ShootMissileBehavior.execute(this._parent, game);
         }
+    }
+}
+
+export class MissileControlsComponent extends ControlsComponent {
+    execute() {
+        MoveForwardBehavior.execute(this._parent);
     }
 }

@@ -7,8 +7,8 @@ export class BehaviorSystem extends System {
     }
 
     update() {
-        this._movingObjects.forEach(object => {
-            object.behaviorComponent.execute();
-        });
+        // this._movingObjects.forEach(object => {
+        //     object.behaviorComponent.execute();
+        // });
     }
 }

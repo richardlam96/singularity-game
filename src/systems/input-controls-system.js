@@ -1,27 +1,26 @@
 import { System } from './system';
 
 export class InputControlsSystem extends System {
-    constructor(params) {
+    constructor(game) {
         super()
-        this._scene = params.scene;
-        this._inputManager = params.inputManager;
-        this._assetFactory = params.assetFactory;
-        this.player = params.player;
-        this.missiles = params.missiles;
+        this._game = game;
     }
 
     createMissile() {
         let newMissile = new ControlledObject({
-            model: new ModelComponent(this._assetFactory.getMissile()),
+            model: new ModelComponent(this._game.assetFactory.getMissile()),
             hitbox: new HitboxComponent(new Box3()),
-            stats: new MissileStats(this._missileStats)
+            stats: new MissileStats(this._game.currentPlaythroughStats)
         });
-        this._missiles.push(newMissile);
-        this._scene.add(newMissile.modelComponent.model);
+        this._game.missiles.push(newMissile);
+        this._game.scene.add(newMissile.modelComponent.model);
         return newMissile;
     }
 
     update(timeElapsed) {
-        this.player.inputControlsComponent.execute(this._assetFactory, this._inputManager, this._scene, this.missiles);
+        this._game.player.inputControlsComponent.execute(this._game);
+        this._game.missiles.forEach(missile => {
+            missile.inputControlsComponent.execute();
+        });
     }
 }
