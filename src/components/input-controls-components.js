@@ -8,7 +8,11 @@ export class ControlsComponent extends Component {
 }
 
 export class PlayerInputControlsComponent extends ControlsComponent {
-    execute(game) {
+    constructor() {
+        super();
+        this._lastMissileTime = 0;
+    }
+    execute(game, timeElapsed) {
         if (game.inputManager.keys.arrowUp) {
             MoveForwardBehavior.execute(this._parent);
         }
@@ -19,8 +23,10 @@ export class PlayerInputControlsComponent extends ControlsComponent {
             TurnRightBehavior.execute(this._parent);
         }
 
-        if (game.inputManager.keys.spacebar) {
+        let readyToFire = (timeElapsed - this._lastMissileTime) > this._parent.statsComponent.missileDelay;
+        if (game.inputManager.keys.spacebar && readyToFire) {
             ShootMissileBehavior.execute(this._parent, game);
+            this._lastMissileTime = timeElapsed;
         }
     }
 }

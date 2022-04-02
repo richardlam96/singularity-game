@@ -100,12 +100,7 @@ export class Game {
         this.player = new LivingObject({
             model: new ModelComponent(this.assetFactory.getPlane()),
             hitbox: new HitboxComponent(new THREE.Box3()),
-            stats: new PlayerObjectStats({
-                hp: playthroughStats.hp,
-                poise: playthroughStats.poise,
-                speed: playthroughStats.speed,
-                turnSpeed: playthroughStats.turnSpeed
-            }),
+            stats: new PlayerObjectStats(this.currentPlaythroughStats),
             inputControls: new PlayerInputControlsComponent(),
             healthbar: new PlayerHealthUI()
         });

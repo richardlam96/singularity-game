@@ -23,6 +23,10 @@ export class PlayerObjectStats extends RPGStats {
         super(params);
         this.speed = params.speed;
         this.turnSpeed = params.turnSpeed;
+        this.missileDelay = params.missileDelay;
+        this.missileDamage = params.missileDamage;
+        this.missileSpeed = params.missileSpeed;
+        this.missileHealth = params.missileHealth;
     }
 }
 

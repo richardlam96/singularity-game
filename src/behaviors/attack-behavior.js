@@ -10,7 +10,11 @@ export class ShootMissileBehavior extends Behavior {
         let newMissile = new ControlledObject({
             model: new ModelComponent(game.assetFactory.getMissile()),
             hitbox: new HitboxComponent(new Box3()),
-            stats: new MissileStats(gameObject.statsComponent),
+            stats: new MissileStats({
+                hp: gameObject.statsComponent.missileHealth,
+                poise: gameObject.statsComponent.missileDamage,
+                speed: gameObject.statsComponent.missileSpeed
+            }),
             inputControls: new MissileControlsComponent()
         });
         newMissile.modelComponent.model.position.copy(gameObject.modelComponent.model.position);
