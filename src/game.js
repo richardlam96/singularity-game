@@ -34,6 +34,9 @@ export class Game {
         this.light = params.light;
         this.assetFactory = params.assetFactory;
         this.inputManager = params.inputManager;
+        this.clock = new THREE.Clock();
+        this.delta = 0;
+        this.interval = 1 / 60;
         
         this.levelUpMenu = new LevelUpMenuUI();
         this.endgameBanner = new EndGameBanner();
@@ -162,8 +165,12 @@ export class Game {
 
     render = (timeElapsed) => {
         requestAnimationFrame(this.render);
-        timeElapsed *= 0.001;
-        this.update(timeElapsed);
-        this._renderer.render(this.scene, this.camera._camera);
+        this.delta += this.clock.getDelta();
+
+        if (this.delta > this.interval) {
+            timeElapsed *= 0.001;
+            this.update(timeElapsed);
+            this._renderer.render(this.scene, this.camera._camera);
+        }
     }
 }
