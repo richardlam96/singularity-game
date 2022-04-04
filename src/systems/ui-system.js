@@ -4,8 +4,9 @@ export class UISystem extends System {
     constructor(params) {
         super();
         this.player = params.player;
-        this.stats = params.stats;
-        this.healthUI = params.healthUI;
+        // this.stats = params.stats;
+        // this.healthUI = params.healthUI;
+
         this.levelUpUI = params.levelUpUI;
         this.endgameBanner = params.endgameBanner;
         this.onLevelUp = params.onLevelUp;
@@ -27,16 +28,18 @@ export class UISystem extends System {
     }
 
     addLevelOptions() {
+        let playerStats = this.player.statsComponent;
+
         let incrementStat = (statName, amount) => { 
-            let newValue = this.stats[statName] + amount;
-            this.stats[statName] = Math.round(newValue * 1000) / 1000;
-            this.onLevelUp(this.stats); 
+            let newValue = playerStats[statName] + amount;
+            playerStats[statName] = Math.round(newValue * 1000) / 1000;
+            this.onLevelUp(playerStats); 
         };
         let decrementStat = (statName, amount) => { 
-            let newValue = this.stats[statName] - amount;
+            let newValue = playerStats[statName] - amount;
             let roundedValue = Math.round(newValue * 1000) / 1000;
-            this.stats[statName] = Math.max(0, roundedValue);
-            this.onLevelUp(this.stats); 
+            playerStats[statName] = Math.max(0, roundedValue);
+            this.onLevelUp(playerStats); 
         };
 
         let levelIncrementCallbacks = {
@@ -52,7 +55,7 @@ export class UISystem extends System {
 
         // Basic callbacks for incrementing or decrementing a stat.
 
-        for (const [attr, value] of Object.entries(this.stats)) {
+        for (const [attr, value] of Object.entries(playerStats)) {
             let buttonText = attr + ' - ' + value;
             let callback = levelIncrementCallbacks[attr];
             this.levelUpUI.addMenuOption(buttonText, callback);

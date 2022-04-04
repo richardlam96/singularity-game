@@ -77,9 +77,9 @@ export class Game {
     }
 
     clean() {
-        this.player.model.removeFromParent();
-        this.obstacles.forEach(obstacle => obstacle.model.removeFromParent());
-        this.missiles.forEach(missile => missile.model.removeFromParent());
+        this.player.modelComponent.model.removeFromParent();
+        this.obstacles.forEach(obstacle => obstacle.modelComponent.model.removeFromParent());
+        this.missiles.forEach(missile => missile.modelComponent.model.removeFromParent());
         this.uiSystem.clean();
 
         this.player = null;
@@ -109,7 +109,7 @@ export class Game {
     }
 
     _initObstacles(playthroughStats) {
-        for (let _ = 0; _ < 10; _++) {
+        for (let _ = 0; _ < 1; _++) {
             let cube = new BaseGameObject({
                 model: new ModelComponent(this.assetFactory.getCube()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
@@ -170,7 +170,7 @@ export class Game {
             this.hitboxSystem.update();
             this.collisionSystem.update();
             this.behaviorSystem.update();
-            // this.uiSystem.update();
+            this.uiSystem.update();
         }
     }
 
