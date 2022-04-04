@@ -28,6 +28,8 @@ export class UISystem extends System {
     }
 
     addLevelOptions() {
+
+        // This stuff should be somewhere else.
         let playerStats = this.player.statsComponent;
 
         let incrementStat = (statName, amount) => { 
@@ -42,6 +44,7 @@ export class UISystem extends System {
             this.onLevelUp(playerStats); 
         };
 
+        // Basic callbacks for incrementing or decrementing a stat.
         let levelIncrementCallbacks = {
             'hp': () => incrementStat('hp', 1),
             'poise': () => incrementStat('poise', 1),
@@ -53,8 +56,7 @@ export class UISystem extends System {
             'missileSpeed': () => incrementStat('missileSpeed', 1)
         };
 
-        // Basic callbacks for incrementing or decrementing a stat.
-
+        // Only this is for UI.
         for (const [attr, value] of Object.entries(playerStats)) {
             let buttonText = attr + ' - ' + value;
             let callback = levelIncrementCallbacks[attr];

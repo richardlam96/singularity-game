@@ -1,11 +1,7 @@
 export class System {
-    constructor() {
-        this.enabled = true;
+    constructor(game) {
+        this.game = game;
     }
-
-    enable() { this.enabled = true; }
-    disable() { this.enabled = false; }
-    toggle() { this.enabled = !this.enabled; }
 
     update() {}
 }
