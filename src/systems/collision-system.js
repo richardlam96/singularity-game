@@ -1,13 +1,8 @@
 import { System } from "./system";
 
 export class CollisionSystem extends System {
-    constructor(params) {
-        super();
-        this.player = params.player;
-        this.missiles = params.missiles;
-        this.obstacles = params.obstacles;
-        this.onPlayerDeath = params.onPlayerDeath;
-        this.onLevelEnd = params.onLevelEnd;
+    constructor(game) {
+        super(game);
     }
 
     _handleObjectCollision(objectA, objectB) {
@@ -16,27 +11,27 @@ export class CollisionSystem extends System {
     }
 
     update() {
-        this.obstacles.forEach((obstacle, obstacleIndex) => {
-            if (this.player.hitboxComponent.hitbox.intersectsBox(obstacle.hitboxComponent.hitbox)) {
-                this._handleObjectCollision(this.player, obstacle);
+        this.game.obstacles.forEach((obstacle, obstacleIndex) => {
+            if (this.game.player.hitboxComponent.hitbox.intersectsBox(obstacle.hitboxComponent.hitbox)) {
+                this._handleObjectCollision(this.game.player, obstacle);
             }
-            this.missiles.forEach((missile, missileIndex) => {
+            this.game.missiles.forEach((missile, missileIndex) => {
                 if (missile.hitboxComponent.hitbox.intersectsBox(obstacle.hitboxComponent.hitbox)) {
                     this._handleObjectCollision(missile, obstacle);
                 }
                 if (missile.statsComponent.hp <= 0) {
                     missile.modelComponent.model.removeFromParent();
-                    this.missiles.splice(missileIndex, 1);
+                    this.game.missiles.splice(missileIndex, 1);
                 }
             });
             if (obstacle.statsComponent.hp <= 0) {
                 obstacle.modelComponent.model.removeFromParent();
-                this.obstacles.splice(obstacleIndex, 1);
+                this.game.obstacles.splice(obstacleIndex, 1);
             }
         });
 
-        if (this.obstacles.length === 0) {
-            this.onLevelEnd();
+        if (this.game.obstacles.length === 0) {
+            this.game.endCurrentLevel();
         }
     }
 }

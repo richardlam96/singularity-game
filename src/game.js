@@ -109,7 +109,7 @@ export class Game {
     }
 
     _initObstacles(playthroughStats) {
-        for (let _ = 0; _ < 1; _++) {
+        for (let _ = 0; _ < 10; _++) {
             let cube = new BaseGameObject({
                 model: new ModelComponent(this.assetFactory.getCube()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
@@ -149,13 +149,7 @@ export class Game {
         });
 
         // Initialize the Collision System with the game objects.
-        this.collisionSystem = new CollisionSystem({
-            player: this.player,
-            missiles: this.missiles,
-            obstacles: this.obstacles,
-            onPlayerDeath: this.showEndgame,
-            onLevelEnd: this.endCurrentLevel
-        });
+        this.collisionSystem = new CollisionSystem(this);
 
         // Initialize the Behavior System for missiles.
         this.behaviorSystem = new BehaviorSystem(this.missiles);
