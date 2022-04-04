@@ -1,16 +1,8 @@
 import { System } from './system';
 
 export class UISystem extends System {
-    constructor(params) {
-        super();
-        this.player = params.player;
-        // this.stats = params.stats;
-        // this.healthUI = params.healthUI;
-
-        this.levelUpUI = params.levelUpUI;
-        this.endgameBanner = params.endgameBanner;
-        this.onLevelUp = params.onLevelUp;
-        this.onRestart = params.onRestart;
+    constructor(game) {
+        super(game);
         this._init();
     }
 
@@ -20,28 +12,28 @@ export class UISystem extends System {
     }
 
     showEndBanner() {
-        this.endgameBanner.show();
+        this.game.endgameBanner.show();
     }
 
     showLevelMenu() {
-        this.levelUpUI.show();
+        this.game.levelUpMenu.show();
     }
 
     addLevelOptions() {
 
         // This stuff should be somewhere else.
-        let playerStats = this.player.statsComponent;
+        let playerStats = this.game.player.statsComponent;
 
         let incrementStat = (statName, amount) => { 
             let newValue = playerStats[statName] + amount;
             playerStats[statName] = Math.round(newValue * 1000) / 1000;
-            this.onLevelUp(playerStats); 
+            this.game.startNextLevel(playerStats); 
         };
         let decrementStat = (statName, amount) => { 
             let newValue = playerStats[statName] - amount;
             let roundedValue = Math.round(newValue * 1000) / 1000;
             playerStats[statName] = Math.max(0, roundedValue);
-            this.onLevelUp(playerStats); 
+            this.game.startNextLevel(playerStats); 
         };
 
         // Basic callbacks for incrementing or decrementing a stat.
@@ -60,21 +52,21 @@ export class UISystem extends System {
         for (const [attr, value] of Object.entries(playerStats)) {
             let buttonText = attr + ' - ' + value;
             let callback = levelIncrementCallbacks[attr];
-            this.levelUpUI.addMenuOption(buttonText, callback);
+            this.game.levelUpMenu.addMenuOption(buttonText, callback);
         }
     }
 
     setRestartCallback() {
-        this.endgameBanner.setRestart(this.onRestart);
+        this.game.endgameBanner.setRestart(this.game.end);
     }
 
     clean() {
-        this.levelUpUI.clean();
-        this.endgameBanner.hide();
+        this.game.levelUpMenu.clean();
+        this.game.endgameBanner.hide();
     }
 
     update() {
         // Do we need to have this updated per frame, or can we do this on event?
-        this.player.healthbarComponent.update();
+        this.game.player.healthbarComponent.update();
     }
 }

@@ -39,6 +39,9 @@ export class Game {
         this.light = params.light;
         this.assetFactory = params.assetFactory;
         this.inputManager = params.inputManager;
+        
+        this.levelUpMenu = new LevelUpMenuUI();
+        this.endgameBanner = new EndGameBanner();
 
         this.currentPlaythroughStats;
         this.player;
@@ -128,15 +131,7 @@ export class Game {
 
     _initSystems(playthroughStats) {
         // Initialize UI Components and System.
-        this.uiSystem = new UISystem({
-            player: this.player,
-            stats: playthroughStats,
-            healthUI: new PlayerHealthUI(),
-            levelUpUI: new LevelUpMenuUI(),
-            endgameBanner: new EndGameBanner(),
-            onLevelUp: this.startNextLevel,
-            onRestart: this.end
-        });
+        this.uiSystem = new UISystem(this);
 
         // Initialize the InputControlsSystem and pair Controls with objects.
         this.inputControlsSystem = new InputControlsSystem(this);
