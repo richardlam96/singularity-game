@@ -1,22 +1,16 @@
-import { MissileControls } from "./controls/missile-controls";
-import { PlayerControls } from "./controls/player-controls";
+import * as THREE from "three";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { LevelingSystem } from "./systems/leveling-system";
 import { UISystem } from "./systems/ui-system";
-import { BehaviorSystem } from "./systems/behavior-system";
 import { BaseGameObject } from "./game-objects/game-object";
 import { RPGStats, PlayerObjectStats } from "./game-objects/rpg-stats";
 import { EndGameBanner } from "./ui/end-game-banner";
 import { PlayerHealthUI } from './ui/player-health';
 import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
-import { HalfDepthStrategy, FullBoxStrategy } from "./strategy/hitbox-strategies";
-import * as THREE from "three";
 import { LivingObject } from "./game-objects/living-object";
-import { ControlledObject } from "./game-objects/controlled-object";
-import { Entity } from "./components/entity";
 import { HitboxComponent, ModelComponent } from "./components/game-object-components";
 import { PlayerInputControlsComponent } from "./components/input-controls-components";
 
@@ -50,7 +44,6 @@ export class Game {
         this.obstacles = [];
         this.missiles = [];
         this.inputControlsSystem;
-        this.behaviorSystem;
         this.collisionSystem;
         this.hitboxSystem;
         this.levelingSystem;
@@ -153,9 +146,6 @@ export class Game {
 
         // Initialize the Collision System with the game objects.
         this.collisionSystem = new CollisionSystem(this);
-
-        // Initialize the Behavior System for missiles.
-        this.behaviorSystem = new BehaviorSystem(this.missiles);
     }
 
     update(timeElapsed) {
@@ -166,7 +156,6 @@ export class Game {
             this.inputControlsSystem.update(timeElapsed);
             this.hitboxSystem.update();
             this.collisionSystem.update();
-            this.behaviorSystem.update();
             this.uiSystem.update();
         }
     }
