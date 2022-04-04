@@ -12,6 +12,10 @@ export class LevelUpMenuUI {
         return document.querySelector(this.optionsListLocator);
     }
 
+    _getMenuOptions() {
+        return document.querySelectorAll(this.optionsListLocator + " button");
+    }
+
     addMenuOption(name, callback) {
         let newMenuOption = document.createElement('button');
         newMenuOption.textContent = name;
@@ -29,5 +33,6 @@ export class LevelUpMenuUI {
 
     clean() {
         this.hide();
+        this._getMenuOptions().forEach(option => option.remove());
     }
 }

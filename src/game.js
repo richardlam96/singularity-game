@@ -3,6 +3,7 @@ import { PlayerControls } from "./controls/player-controls";
 import { CollisionSystem } from "./systems/collision-system";
 import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
+import { LevelingSystem } from "./systems/leveling-system";
 import { UISystem } from "./systems/ui-system";
 import { BehaviorSystem } from "./systems/behavior-system";
 import { BaseGameObject } from "./game-objects/game-object";
@@ -24,7 +25,7 @@ const STARTING_STATS = {
     poise: 10,
     speed: 0.2,
     turnSpeed: 0.025,
-    missileDelay: 1,
+    missileDelay: 0.1,
     missileHealth: 1,
     missileDamage: 1,
     missileSpeed: 1,
@@ -43,40 +44,44 @@ export class Game {
         this.levelUpMenu = new LevelUpMenuUI();
         this.endgameBanner = new EndGameBanner();
 
-        this.currentPlaythroughStats;
+        this.currentLevelStats = {};
+        this.currentPlayStats = {};
         this.player;
         this.obstacles = [];
         this.missiles = [];
         this.inputControlsSystem;
+        this.behaviorSystem;
         this.collisionSystem;
         this.hitboxSystem;
-        this.behaviorSystem;
+        this.levelingSystem;
         this.uiSystem;
     }
 
     _initGameStats() {
-        this.currentPlaythroughStats = Object.assign({}, STARTING_STATS);
+        this.currentLevelStats = Object.assign({}, STARTING_STATS);
+        this.currentPlayStats = Object.assign({}, STARTING_STATS);
     }
 
     startNewGame() {
         this._initGameStats();
-        this.start(this.currentPlaythroughStats);
+        this.start(this.currentPlayStats);
     }
 
-    startNextLevel = (playthroughStats) => {
+    startNextLevel = () => {
         this.clean();
-        playthroughStats.difficulty += 1;
-        this.start(playthroughStats);
+        this.currentLevelStats.difficulty += 1;
+        this.currentPlayStats = Object.assign({}, this.currentLevelStats);
+        this.start(this.currentPlayStats);
     }
 
     endCurrentLevel = () => {
         this.uiSystem.showLevelMenu();
     }
 
-    start(playthroughStats) {
-        this._initPlayer(playthroughStats);
-        this._initObstacles(playthroughStats);
-        this._initSystems(playthroughStats);
+    start(playStats) {
+        this._initPlayer(playStats);
+        this._initObstacles(playStats);
+        this._initSystems(playStats);
     }
 
     clean() {
@@ -99,11 +104,11 @@ export class Game {
         this.startNewGame();
     }
 
-    _initPlayer(playthroughStats) {
+    _initPlayer(playStats) {
         this.player = new LivingObject({
             model: new ModelComponent(this.assetFactory.getPlane()),
             hitbox: new HitboxComponent(new THREE.Box3()),
-            stats: new PlayerObjectStats(this.currentPlaythroughStats),
+            stats: new PlayerObjectStats(playStats),
             inputControls: new PlayerInputControlsComponent(),
             healthbar: new PlayerHealthUI()
         });
@@ -111,14 +116,14 @@ export class Game {
         this.camera.setTarget(this.player.modelComponent.model);
     }
 
-    _initObstacles(playthroughStats) {
+    _initObstacles(playStats) {
         for (let _ = 0; _ < 10; _++) {
             let cube = new BaseGameObject({
                 model: new ModelComponent(this.assetFactory.getCube()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
                 stats: new RPGStats({
-                    hp: playthroughStats.difficulty,
-                    poise: playthroughStats.difficulty
+                    hp: playStats.difficulty,
+                    poise: playStats.difficulty
                 })
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
@@ -129,7 +134,10 @@ export class Game {
         }
     }
 
-    _initSystems(playthroughStats) {
+    _initSystems(playStats) {
+        
+        this.levelingSystem = new LevelingSystem(this);
+
         // Initialize UI Components and System.
         this.uiSystem = new UISystem(this);
 

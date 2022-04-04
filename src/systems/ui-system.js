@@ -20,38 +20,37 @@ export class UISystem extends System {
     }
 
     addLevelOptions() {
+        for (const [attr, value] of Object.entries(this.game.currentLevelStats)) {
+            if (attr === 'difficulty') { continue; }
 
-        // This stuff should be somewhere else.
-        let playerStats = this.game.player.statsComponent;
-
-        let incrementStat = (statName, amount) => { 
-            let newValue = playerStats[statName] + amount;
-            playerStats[statName] = Math.round(newValue * 1000) / 1000;
-            this.game.startNextLevel(playerStats); 
-        };
-        let decrementStat = (statName, amount) => { 
-            let newValue = playerStats[statName] - amount;
-            let roundedValue = Math.round(newValue * 1000) / 1000;
-            playerStats[statName] = Math.max(0, roundedValue);
-            this.game.startNextLevel(playerStats); 
-        };
-
-        // Basic callbacks for incrementing or decrementing a stat.
-        let levelIncrementCallbacks = {
-            'hp': () => incrementStat('hp', 1),
-            'poise': () => incrementStat('poise', 1),
-            'speed': () => incrementStat('speed', 0.1),
-            'turnSpeed': () => incrementStat('turnSpeed', 0.025),
-            'missileDelay': () => decrementStat('missileDelay', 0.02),
-            'missileHealth': () => incrementStat('missileHealth', 1),
-            'missileDamage': () => incrementStat('missileDamage', 1),
-            'missileSpeed': () => incrementStat('missileSpeed', 1)
-        };
-
-        // Only this is for UI.
-        for (const [attr, value] of Object.entries(playerStats)) {
             let buttonText = attr + ' - ' + value;
-            let callback = levelIncrementCallbacks[attr];
+            let callback;
+            switch (attr) {
+                case 'hp':
+                    callback = this.game.levelingSystem.incrementHP;
+                    break;
+                case 'poise':
+                    callback = this.game.levelingSystem.incrementPose;
+                    break;
+                case 'speed':
+                    callback = this.game.levelingSystem.incrementSpeed;
+                    break;
+                case 'turnSpeed':
+                    callback = this.game.levelingSystem.incrementTurnSpeed;
+                    break;
+                case 'missileDelay':
+                    callback = this.game.levelingSystem.incrementMissileDelay;
+                    break;
+                case 'missileHealth':
+                    callback = this.game.levelingSystem.incrementMissileHealth;
+                    break;
+                case 'missileDamage':
+                    callback = this.game.levelingSystem.incrementMissileDamage;
+                    break;
+                case 'missileSpeed':
+                    callback = this.game.levelingSystem.incrementMissileSpeed;
+                    break;
+            }
             this.game.levelUpMenu.addMenuOption(buttonText, callback);
         }
     }
