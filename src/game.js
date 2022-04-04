@@ -12,7 +12,8 @@ import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { LivingObject } from "./game-objects/living-object";
 import { HitboxComponent, ModelComponent } from "./components/game-object-components";
-import { PlayerInputControlsComponent } from "./components/input-controls-components";
+import { ControlsComponent, EnemyInputControlsComponent, PlayerInputControlsComponent } from "./components/input-controls-components";
+import { ControlledObject } from "./game-objects/controlled-object";
 
 const STARTING_STATS = {
     hp: 10,
@@ -114,13 +115,11 @@ export class Game {
 
     _initObstacles(playStats) {
         for (let _ = 0; _ < 10; _++) {
-            let cube = new BaseGameObject({
+            let cube = new ControlledObject({
                 model: new ModelComponent(this.assetFactory.getEnemyPlane()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
-                stats: new RPGStats({
-                    hp: playStats.difficulty,
-                    poise: playStats.difficulty
-                })
+                stats: new PlayerObjectStats(playStats),
+                inputControls: new EnemyInputControlsComponent()
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
             let z = RandomGenerator.randIntBetween(-40, 40);

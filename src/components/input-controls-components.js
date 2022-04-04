@@ -7,6 +7,12 @@ export class ControlsComponent extends Component {
     execute() {}
 }
 
+export class MissileControlsComponent extends ControlsComponent {
+    execute() {
+        MoveForwardBehavior.execute(this._parent);
+    }
+}
+
 export class PlayerInputControlsComponent extends ControlsComponent {
     constructor() {
         super();
@@ -31,8 +37,13 @@ export class PlayerInputControlsComponent extends ControlsComponent {
     }
 }
 
-export class MissileControlsComponent extends ControlsComponent {
-    execute() {
-        MoveForwardBehavior.execute(this._parent);
+export class EnemyInputControlsComponent extends ControlsComponent {
+    constructor() {
+        super();
+        this._lastMissileTime = 0;
+    }
+
+    execute(game, timeElapsed) {
+        // MoveForwardBehavior.execute(this._parent);
     }
 }

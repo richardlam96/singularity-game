@@ -19,6 +19,9 @@ export class InputControlsSystem extends System {
 
     update(timeElapsed) {
         this._game.player.inputControlsComponent.execute(this._game, timeElapsed);
+        this._game.obstacles.forEach(obstacle => {
+            obstacle.inputControlsComponent.execute(this._game, timeElapsed);
+        });
         this._game.missiles.forEach(missile => {
             missile.inputControlsComponent.execute();
         });
