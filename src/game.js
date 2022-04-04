@@ -115,7 +115,7 @@ export class Game {
     _initObstacles(playStats) {
         for (let _ = 0; _ < 10; _++) {
             let cube = new BaseGameObject({
-                model: new ModelComponent(this.assetFactory.getCube()),
+                model: new ModelComponent(this.assetFactory.getEnemyPlane()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
                 stats: new RPGStats({
                     hp: playStats.difficulty,

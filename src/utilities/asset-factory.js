@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import starFighterGLTF from "../../assets/LPSP_SmallStarfighter.gltf";
-
+import quadFighterGLTF from "../../assets/LPSP_QuadFighter.gltf";
 
 export class AssetFactory {
     constructor() {
@@ -11,6 +11,7 @@ export class AssetFactory {
 
     async init() {
         this.assets["STAR_FIGHTER"] = await this.gltfLoader.loadAsync(starFighterGLTF);
+        this.assets["QUAD_FIGHTER"] = await this.gltfLoader.loadAsync(quadFighterGLTF);
         this.assets["OBSTACLE"] = new THREE.Mesh(
             new THREE.BoxGeometry(2, 10, 2),
             new THREE.MeshToonMaterial({color: 0x00ff00})
@@ -27,6 +28,10 @@ export class AssetFactory {
 
     getPlane() {
         return this.assets["STAR_FIGHTER"].scene.clone();
+    }
+
+    getEnemyPlane() {
+        return this.assets["QUAD_FIGHTER"].scene.clone();
     }
 
     getMissile() {
