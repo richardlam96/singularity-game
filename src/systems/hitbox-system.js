@@ -7,7 +7,7 @@ export class HitboxSystem extends System {
         this.player = params.player;
         this.missiles = params.missiles;
         this.obstacles = params.obstacles;
-        this.hitboxStrategy = new FullBoxStrategy();
+        this.hitboxStrategy = new HalfDepthStrategy();
     }
 
     update() { 

@@ -123,7 +123,7 @@ export class Game {
                     poise: playStats.poise / 2,
                     speed: playStats.speed / 2,
                     turnSpeed: playStats.turnSpeed / 2,
-                    missileDelay: playStats.missileDelay * 2,
+                    missileDelay: playStats.missileDelay * 10,
                     missileDamage: playStats.missileDamage / 2,
                     missileSpeed: playStats.missileSpeed / 2,
                     missileHealth: playStats.missileHealth / 2,
