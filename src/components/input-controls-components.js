@@ -2,6 +2,7 @@ import { MoveForwardBehavior } from '../behaviors/move-forward-behavior';
 import { ShootMissileBehavior } from '../behaviors/attack-behavior';
 import { TurnLeftBehavior, TurnRightBehavior } from '../behaviors/turn-behavior';
 import { Component } from './component';
+import { Vector3 } from "three";
 
 export class ControlsComponent extends Component {
     execute() {}
@@ -44,6 +45,10 @@ export class EnemyInputControlsComponent extends ControlsComponent {
     }
 
     execute(game, timeElapsed) {
-        // MoveForwardBehavior.execute(this._parent);
+        let enemyPosition = this._parent.modelComponent.model.position.clone();
+        let playerPosition = game.player.modelComponent.model.position.clone();
+        let newLookAt = enemyPosition.add(playerPosition.clone().negate());
+        this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), newLookAt.clone().normalize());
+        MoveForwardBehavior.execute(this._parent);
     }
 }

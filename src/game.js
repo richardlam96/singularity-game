@@ -45,7 +45,7 @@ export class Game {
         this.currentLevelStats = {};
         this.currentPlayStats = {};
         this.player;
-        this.obstacles = [];
+        this.enemies = [];
         this.missiles = [];
         this.inputControlsSystem;
         this.collisionSystem;
@@ -83,12 +83,12 @@ export class Game {
 
     clean() {
         this.player.modelComponent.model.removeFromParent();
-        this.obstacles.forEach(obstacle => obstacle.modelComponent.model.removeFromParent());
+        this.enemies.forEach(obstacle => obstacle.modelComponent.model.removeFromParent());
         this.missiles.forEach(missile => missile.modelComponent.model.removeFromParent());
         this.uiSystem.clean();
 
         this.player = null;
-        this.obstacles = [];
+        this.enemies = [];
         this.missiles = [];
     }
 
@@ -115,17 +115,26 @@ export class Game {
 
     _initObstacles(playStats) {
         for (let _ = 0; _ < 10; _++) {
-            let cube = new ControlledObject({
+            let enemy = new ControlledObject({
                 model: new ModelComponent(this.assetFactory.getEnemyPlane()),
                 hitbox: new HitboxComponent(new THREE.Box3()),
-                stats: new PlayerObjectStats(playStats),
+                stats: new PlayerObjectStats({
+                    hp: playStats.hp / 2,
+                    poise: playStats.poise / 2,
+                    speed: playStats.speed / 2,
+                    turnSpeed: playStats.turnSpeed / 2,
+                    missileDelay: playStats.missileDelay * 2,
+                    missileDamage: playStats.missileDamage / 2,
+                    missileSpeed: playStats.missileSpeed / 2,
+                    missileHealth: playStats.missileHealth / 2,
+                }),
                 inputControls: new EnemyInputControlsComponent()
             });
             let x = RandomGenerator.randIntBetween(-40, 40);
             let z = RandomGenerator.randIntBetween(-40, 40);
-            cube.modelComponent.model.position.set(x, 0, z);
-            this.scene.add(cube.modelComponent.model);
-            this.obstacles.push(cube);
+            enemy.modelComponent.model.position.set(x, 0, z);
+            this.scene.add(enemy.modelComponent.model);
+            this.enemies.push(enemy);
         }
     }
 
@@ -143,7 +152,7 @@ export class Game {
         this.hitboxSystem = new HitboxSystem({
             player: this.player,
             missiles: this.missiles,
-            obstacles: this.obstacles
+            obstacles: this.enemies
         });
 
         // Initialize the Collision System with the game objects.
