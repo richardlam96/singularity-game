@@ -7,17 +7,33 @@
 			body { 
         margin: 0; 
       }
+      .menu {
+        border: 1px solid black;
+        box-shadow: -5px 5px;
+        padding: 7px 12px;
+      }
       div#player-ui {
         position: absolute;
+        top: 10px;
+        left: 10px;
         display: flex;
         flex-direction: column;
       }
+      span#player-health {
+        padding: 5px;
+        font-size: 14pt;
+      }
       div#level-up-menu {
+        position: relative;
+        top: 10px;
         display: none;
       }
       div#level-up-menu-options {
         display: flex;
         flex-direction: column;
+      }
+      div#level-up-menu-options button {
+        padding: 5px;
       }
       div#end-game-banner {
         color: red;
@@ -41,9 +57,10 @@
 
   <body>
     <div id="player-ui">
-      <div id="player-health-bar">Player Health: <span id="player-health"></span></div>
-      <div id="level-up-menu">
-        Level Up!
+      <div id="player-health-bar" class="menu">Player Health: <span id="player-health"></span></div>
+      <div id="level-up-menu" class="menu">
+        <h3>Level Up!</h3>
+        <p>Pick an attribute to level up:</p> 
         <div id="level-up-menu-options"></div>
       </div>
     </div>

@@ -30,7 +30,7 @@ export class UISystem extends System {
                     callback = this.game.levelingSystem.incrementHP;
                     break;
                 case 'poise':
-                    callback = this.game.levelingSystem.incrementPose;
+                    callback = this.game.levelingSystem.incrementPoise;
                     break;
                 case 'speed':
                     callback = this.game.levelingSystem.incrementSpeed;
@@ -65,7 +65,6 @@ export class UISystem extends System {
     }
 
     update() {
-        // Do we need to have this updated per frame, or can we do this on event?
         this.game.player.healthbarComponent.update();
     }
 }
