@@ -19,7 +19,7 @@ const STARTING_STATS = {
     poise: 10,
     speed: 0.2,
     turnSpeed: 0.025,
-    missileDelay: 0.1,
+    missileDelay: 0.2,
     missileHealth: 1,
     missileDamage: 1,
     missileSpeed: 1,
@@ -137,12 +137,12 @@ export class Game {
         const MAX_BOUND = 150;
         const MIN_BOUND = 50;
 
-        for (let _ = 0; _ < 10; _++) {
+        for (let _ = 0; _ < (playStats.difficulty * 3); _++) {
             let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
             let z = RandomGenerator.randIntBetween(MIN_BOUND, MAX_BOUND);
             this._createEnemy(playStats, x, z);
         }
-        for (let _ = 0; _ < 10; _++) {
+        for (let _ = 0; _ < (playStats.difficulty * 3); _++) {
             let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
             let z = RandomGenerator.randIntBetween(-MIN_BOUND, -MAX_BOUND);
             this._createEnemy(playStats, x, z);
