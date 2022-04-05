@@ -27,8 +27,6 @@ assetFactory.init()
             skyboxBack,
         ]);
 
-    scene.add(new THREE.GridHelper(100, 100));
-
     // Initialize the renderer.
     const renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
