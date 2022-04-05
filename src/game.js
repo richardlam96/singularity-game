@@ -141,13 +141,11 @@ export class Game {
             let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
             let z = RandomGenerator.randIntBetween(MIN_BOUND, MAX_BOUND);
             this._createEnemy(playStats, x, z);
-            console.log("front", x, z);
         }
         for (let _ = 0; _ < 10; _++) {
             let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
             let z = RandomGenerator.randIntBetween(-MIN_BOUND, -MAX_BOUND);
             this._createEnemy(playStats, x, z);
-            console.log("back", x, z);
         }
     }
 

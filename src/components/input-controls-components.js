@@ -47,12 +47,15 @@ export class EnemyInputControlsComponent extends ControlsComponent {
     execute(game, timeElapsed) {
         MoveForwardBehavior.execute(this._parent);
 
-        let getPing = (timeElapsed - this._lastPingTime) > 5;
+        let getPing = (timeElapsed - this._lastPingTime) > 3;
         if (getPing && (Math.random() < 0.5)) {
             let enemyPosition = this._parent.modelComponent.model.position.clone();
             let playerPosition = game.player.modelComponent.model.position.clone();
             let newLookAt = enemyPosition.add(playerPosition.clone().negate());
-            this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), newLookAt.clone().normalize());
+
+            if (newLookAt.length() < 100) {
+                this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), newLookAt.clone().normalize());
+            }
             this._lastPingTime = timeElapsed;
         }
 
