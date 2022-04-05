@@ -59,20 +59,19 @@ export class EnemyInputControlsComponent extends ControlsComponent {
         let direction = vectorBetween.clone().normalize();
         let getPing = (timeElapsed - this._lastPingTime) > 3;
         let readyToFire = (timeElapsed - this._lastMissileTime) > this._parent.statsComponent.missileDelay;
-        
+
         if ((vectorBetween.length() >= 20) && (vectorBetween.length() < 80)) {
             this.turnTowards(direction);
-
-            if (readyToFire && this.willFire) {
+            if ((this._parent.modelComponent.model.getWorldDirection(new Vector3()).angleTo(direction) < 0.5)
+                && readyToFire) {
                 ShootMissileBehavior.execute(this._parent, game);
                 this._lastMissileTime = timeElapsed;
             }
-
         } else if (vectorBetween.length() < 20) {
             this.turnTowards(direction.negate());
-        }
-        else if (getPing) {
-            this.turnTowards(direction);
+        } else if (getPing) {
+            let quaternion = this._parent.modelComponent.model.quaternion;
+            quaternion.setFromUnitVectors(new Vector3(0, 0, 1), direction);
             this._lastPingTime = timeElapsed;
         }
     }

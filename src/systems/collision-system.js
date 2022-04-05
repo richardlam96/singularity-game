@@ -22,13 +22,19 @@ export class CollisionSystem extends System {
             if (this.game.enemies.length === 0) {
                 this.game.endCurrentLevel();
             }
+            this.game.enemies.forEach((otherEnemy, otherEnemyIndex) => {
+                if ((enemyIndex !== otherEnemyIndex)
+                    && (enemy.hitboxComponent.hitbox.intersectsBox(otherEnemy.hitboxComponent.hitbox))) {
+                    this._handleObjectCollision(enemy, otherEnemy);
+                }
+            });
         });
 
         this.game.missiles.forEach((missile, missileIndex) => {
             if (missile.hitboxComponent.hitbox.intersectsBox(this.game.player.hitboxComponent.hitbox)) {
                 this._handleObjectCollision(missile, this.game.player);
             }
-            this.game.enemies.forEach((enemy, enemyIndex) => {
+            this.game.enemies.forEach((enemy) => {
                 if (missile.hitboxComponent.hitbox.intersectsBox(enemy.hitboxComponent.hitbox)) {
                     this._handleObjectCollision(missile, enemy);
                 }
