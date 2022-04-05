@@ -119,8 +119,8 @@ export class Game {
             stats: new PlayerObjectStats({
                 hp: playStats.hp / 2,
                 poise: playStats.poise / 2,
-                speed: playStats.speed / 2,
-                turnSpeed: playStats.turnSpeed / 2,
+                speed: playStats.speed / 1.5,
+                turnSpeed: playStats.turnSpeed,
                 missileDelay: playStats.missileDelay * 10,
                 missileDamage: playStats.missileDamage / 2,
                 missileSpeed: playStats.missileSpeed / 2,
