@@ -25,6 +25,6 @@ export class PlayerHealthUI extends Component {
     }
 
     update() {
-        this._getElement().innerHTML = this._parent.statsComponent.hp;
+        this._getElement().innerHTML = Math.round(this._parent.statsComponent.hp * 10) / 10;
     }
 }
