@@ -62,7 +62,7 @@ export class EnemyInputControlsComponent extends ControlsComponent {
 
         if ((vectorBetween.length() >= 20) && (vectorBetween.length() < 80)) {
             this.turnTowards(direction);
-            if ((this._parent.modelComponent.model.getWorldDirection(new Vector3()).angleTo(direction) < 0.5)
+            if ((this._parent.modelComponent.model.getWorldDirection(new Vector3()).angleTo(direction) < 0.35)
                 && readyToFire) {
                 ShootMissileBehavior.execute(this._parent, game);
                 this._lastMissileTime = timeElapsed;
