@@ -43,21 +43,23 @@ export class EnemyInputControlsComponent extends ControlsComponent {
         super();
         this._lastMissileTime = 0;
         this._lastPingTime = 0;
+        this.willFire = (Math.random() < 0.5);
     }
 
     execute(game, timeElapsed) {
+        MoveForwardBehavior.execute(this._parent);
+
         let getPing = (timeElapsed - this._lastPingTime) > 5;
-        if (getPing) {
+        if (getPing && (Math.random() < 0.5)) {
             let enemyPosition = this._parent.modelComponent.model.position.clone();
             let playerPosition = game.player.modelComponent.model.position.clone();
             let newLookAt = enemyPosition.add(playerPosition.clone().negate());
             this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), newLookAt.clone().normalize());
             this._lastPingTime = timeElapsed;
         }
-        MoveForwardBehavior.execute(this._parent);
 
         let readyToFire = (timeElapsed - this._lastMissileTime) > this._parent.statsComponent.missileDelay;
-        if (readyToFire) {
+        if (readyToFire && this.willFire) {
             ShootMissileBehavior.execute(this._parent, game);
             this._lastMissileTime = timeElapsed;
         }
