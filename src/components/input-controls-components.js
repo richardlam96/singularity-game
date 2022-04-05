@@ -3,6 +3,7 @@ import { ShootMissileBehavior } from '../behaviors/attack-behavior';
 import { TurnLeftBehavior, TurnRightBehavior } from '../behaviors/turn-behavior';
 import { Component } from './component';
 import { Quaternion, Vector3 } from "three";
+import { RandomGenerator } from "../utilities/random-generator";
 
 export class ControlsComponent extends Component {
     execute() {}
@@ -19,6 +20,14 @@ export class PlayerInputControlsComponent extends ControlsComponent {
         super();
         this._lastMissileTime = 0;
     }
+
+    shake() {
+        let direction = RandomGenerator.randCharge();
+        let change = direction * 0.25
+        this._parent.modelComponent.model.rotation.z += change;
+        setTimeout(() => this._parent.modelComponent.model.rotation.z -= change, 100);
+    }
+
     execute(game, timeElapsed) {
         MoveForwardBehavior.execute(this._parent);
         

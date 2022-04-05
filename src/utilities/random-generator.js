@@ -12,5 +12,9 @@ export class RandomGenerator {
         return Math.random() < 0.5;
     }
 
+    static randCharge() {
+        return Math.random() < 0.5 ? -1 : 1;
+    }
+
     // generate vectors instead?
 }

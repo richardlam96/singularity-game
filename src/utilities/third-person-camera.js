@@ -9,14 +9,14 @@ export class ThirdPersonCamera {
         this._currentLookAt = new Vector3();
     }
 
-    _calculateNewPosition(positionOffsetVector) {
-        return positionOffsetVector
+    _calculateNewPosition() {
+        return new THREE.Vector3(0, 10, 10)
             .applyEuler(this._target.rotation)
             .add(this._target.position);
     }
 
-    _calculateNewLookAt(lookAtOffsetVector) {
-        return lookAtOffsetVector
+    _calculateNewLookAt() {
+        return new THREE.Vector3(0, 0, -10)
             .applyEuler(this._target.rotation)
             .add(this._target.position);
     }
@@ -26,8 +26,8 @@ export class ThirdPersonCamera {
     }
 
     update() {
-        let newPosition = this._calculateNewPosition(new THREE.Vector3(0, 10, 10));
-        let newLookAt = this._calculateNewLookAt(new THREE.Vector3(0, 0, -10));
+        let newPosition = this._calculateNewPosition();
+        let newLookAt = this._calculateNewLookAt();
 
         this._currentPosition.lerp(newPosition, 0.1);
         this._currentLookAt.lerp(newLookAt, 0.1);

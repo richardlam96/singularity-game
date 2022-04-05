@@ -14,6 +14,7 @@ export class CollisionSystem extends System {
         this.game.enemies.forEach((enemy, enemyIndex) => {
             if (this.game.player.hitboxComponent.hitbox.intersectsBox(enemy.hitboxComponent.hitbox)) {
                 this._handleObjectCollision(this.game.player, enemy);
+                this.game.player.inputControlsComponent.shake();
             }
             if (enemy.statsComponent.hp <= 0) {
                 enemy.modelComponent.model.removeFromParent();
@@ -33,6 +34,7 @@ export class CollisionSystem extends System {
         this.game.missiles.forEach((missile, missileIndex) => {
             if (missile.hitboxComponent.hitbox.intersectsBox(this.game.player.hitboxComponent.hitbox)) {
                 this._handleObjectCollision(missile, this.game.player);
+                this.game.player.inputControlsComponent.shake();
             }
             this.game.enemies.forEach((enemy) => {
                 if (missile.hitboxComponent.hitbox.intersectsBox(enemy.hitboxComponent.hitbox)) {
