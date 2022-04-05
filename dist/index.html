@@ -7,6 +7,11 @@
 			body { 
         margin: 0; 
       }
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
       .menu {
         border: 1px solid black;
         box-shadow: -5px 5px;
@@ -49,19 +54,33 @@
         justify-content: center;
         align-items: center;
       }
-      div#end-game-banner span{
+      div#end-game-banner span {
         font-size: 60px;
+      }
+      div#instructions {
+        position: relative;
+        top: 20px;
+        font-style: italic;
       }
 		</style>
   </head>
 
   <body>
     <div id="player-ui">
-      <div id="player-health-bar" class="menu">Player Health: <span id="player-health"></span></div>
+      <div id="player-health-bar" class="menu">
+        Player Health: <span id="player-health"></span>
+      </div>
       <div id="level-up-menu" class="menu">
         <h3>Level Up!</h3>
         <p>Pick an attribute to level up:</p> 
         <div id="level-up-menu-options"></div>
+      </div>
+      <div id="instructions">
+        Instructions:
+        <ul>
+          <li>Space to fire</li>
+          <li>Left and right arrow keys to move</li>
+        </ul>
       </div>
     </div>
     <div id="end-game-banner">
