@@ -47,22 +47,22 @@ export class EnemyInputControlsComponent extends ControlsComponent {
     execute(game, timeElapsed) {
         MoveForwardBehavior.execute(this._parent);
 
+        let enemyPosition = this._parent.modelComponent.model.position.clone();
+        let playerPosition = game.player.modelComponent.model.position.clone();
+        let vectorBetween = enemyPosition.add(playerPosition.clone().negate());
+        let direction = vectorBetween.clone().normalize();
         let getPing = (timeElapsed - this._lastPingTime) > 3;
-        if (getPing && (Math.random() < 0.5)) {
-            let enemyPosition = this._parent.modelComponent.model.position.clone();
-            let playerPosition = game.player.modelComponent.model.position.clone();
-            let newLookAt = enemyPosition.add(playerPosition.clone().negate());
-
-            if (newLookAt.length() < 100) {
-                this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), newLookAt.clone().normalize());
-            }
-            this._lastPingTime = timeElapsed;
-        }
-
         let readyToFire = (timeElapsed - this._lastMissileTime) > this._parent.statsComponent.missileDelay;
-        if (readyToFire && this.willFire) {
-            ShootMissileBehavior.execute(this._parent, game);
-            this._lastMissileTime = timeElapsed;
-        }
+
+        if (vectorBetween.length() < 80) {
+            this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), direction);
+            if (readyToFire && this.willFire) {
+                ShootMissileBehavior.execute(this._parent, game);
+                this._lastMissileTime = timeElapsed;
+            }
+        } else if (getPing) {
+            this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), direction);
+            this._lastPingTime = timeElapsed;
+        }     
     }
 }
