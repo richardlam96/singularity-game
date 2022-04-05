@@ -20,9 +20,7 @@ export class PlayerInputControlsComponent extends ControlsComponent {
         this._lastMissileTime = 0;
     }
     execute(game, timeElapsed) {
-        if (game.inputManager.keys.arrowUp) {
-            MoveForwardBehavior.execute(this._parent);
-        }
+        MoveForwardBehavior.execute(this._parent);
         
         if (game.inputManager.keys.arrowLeft) {
             TurnLeftBehavior.execute(this._parent);

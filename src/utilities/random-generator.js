@@ -4,7 +4,7 @@ export class RandomGenerator {
     }
 
     static randIntBetween(low, high) {
-        let difference = Math.abs(high - low);
+        let difference = high - low;
         return low + this.randInt(difference);
     }
 

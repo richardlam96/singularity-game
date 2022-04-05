@@ -112,28 +112,42 @@ export class Game {
         this.camera.setTarget(this.player.modelComponent.model);
     }
 
+    _createEnemy(playStats, positionX, positionZ) {
+        let enemy = new ControlledObject({
+            model: new ModelComponent(this.assetFactory.getEnemyPlane()),
+            hitbox: new HitboxComponent(new THREE.Box3()),
+            stats: new PlayerObjectStats({
+                hp: playStats.hp / 2,
+                poise: playStats.poise / 2,
+                speed: playStats.speed / 3,
+                turnSpeed: playStats.turnSpeed / 2,
+                missileDelay: playStats.missileDelay * 10,
+                missileDamage: playStats.missileDamage / 2,
+                missileSpeed: playStats.missileSpeed / 2,
+                missileHealth: playStats.missileHealth / 2,
+            }),
+            inputControls: new EnemyInputControlsComponent()
+        });
+        enemy.modelComponent.model.position.set(positionX, 0, positionZ);
+        this.scene.add(enemy.modelComponent.model);
+        this.enemies.push(enemy);
+    }
+
     _initObstacles(playStats) {
+        const MAX_BOUND = 150;
+        const MIN_BOUND = 50;
+
         for (let _ = 0; _ < 10; _++) {
-            let enemy = new ControlledObject({
-                model: new ModelComponent(this.assetFactory.getEnemyPlane()),
-                hitbox: new HitboxComponent(new THREE.Box3()),
-                stats: new PlayerObjectStats({
-                    hp: playStats.hp / 2,
-                    poise: playStats.poise / 2,
-                    speed: playStats.speed / 3,
-                    turnSpeed: playStats.turnSpeed / 2,
-                    missileDelay: playStats.missileDelay * 10,
-                    missileDamage: playStats.missileDamage / 2,
-                    missileSpeed: playStats.missileSpeed / 2,
-                    missileHealth: playStats.missileHealth / 2,
-                }),
-                inputControls: new EnemyInputControlsComponent()
-            });
-            let x = RandomGenerator.randIntBetween(-40, 40);
-            let z = RandomGenerator.randIntBetween(-40, 40);
-            enemy.modelComponent.model.position.set(x, 0, z);
-            this.scene.add(enemy.modelComponent.model);
-            this.enemies.push(enemy);
+            let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
+            let z = RandomGenerator.randIntBetween(MIN_BOUND, MAX_BOUND);
+            this._createEnemy(playStats, x, z);
+            console.log("front", x, z);
+        }
+        for (let _ = 0; _ < 10; _++) {
+            let x = RandomGenerator.randIntBetween(-MAX_BOUND, MAX_BOUND);
+            let z = RandomGenerator.randIntBetween(-MIN_BOUND, -MAX_BOUND);
+            this._createEnemy(playStats, x, z);
+            console.log("back", x, z);
         }
     }
 
