@@ -4,15 +4,14 @@ import { InputControlsSystem } from "./systems/input-controls-system";
 import { HitboxSystem } from "./systems/hitbox-system";
 import { LevelingSystem } from "./systems/leveling-system";
 import { UISystem } from "./systems/ui-system";
-import { BaseGameObject } from "./game-objects/game-object";
-import { RPGStats, PlayerObjectStats } from "./game-objects/rpg-stats";
+import { PlayerObjectStats } from "./game-objects/rpg-stats";
 import { EndGameBanner } from "./ui/end-game-banner";
 import { PlayerHealthUI } from './ui/player-health';
 import { LevelUpMenuUI } from './ui/level-up-menu';
 import { RandomGenerator } from "./utilities/random-generator";
 import { LivingObject } from "./game-objects/living-object";
 import { HitboxComponent, ModelComponent } from "./components/game-object-components";
-import { ControlsComponent, EnemyInputControlsComponent, PlayerInputControlsComponent } from "./components/input-controls-components";
+import { EnemyInputControlsComponent, PlayerInputControlsComponent } from "./components/input-controls-components";
 import { ControlledObject } from "./game-objects/controlled-object";
 
 const STARTING_STATS = {

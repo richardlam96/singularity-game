@@ -3,6 +3,12 @@ import { AssetFactory } from "./utilities/asset-factory";
 import { InputManager } from "./utilities/input-manager";
 import { ThirdPersonCamera } from "./utilities/third-person-camera";
 import { Game } from "./game";
+import skyboxRight from '../assets/Daylight Box_Right.bmp';
+import skyboxLeft from '../assets/Daylight Box_Left.bmp';
+import skyboxTop from '../assets/Daylight Box_Top.bmp';
+import skyboxBottom from '../assets/Daylight Box_Bottom.bmp';
+import skyboxFront from '../assets/Daylight Box_Front.bmp';
+import skyboxBack from '../assets/Daylight Box_Back.bmp';
 
 
 const assetFactory = new AssetFactory();
@@ -11,6 +17,16 @@ assetFactory.init()
 
     // Initialize the scene.
     const scene = new THREE.Scene();
+    scene.background = new THREE.CubeTextureLoader()
+        .load([
+            skyboxRight,
+            skyboxLeft,
+            skyboxTop,
+            skyboxBottom,
+            skyboxFront,
+            skyboxBack,
+        ]);
+
     scene.add(new THREE.GridHelper(100, 100));
 
     // Initialize the renderer.

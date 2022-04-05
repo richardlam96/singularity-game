@@ -14,7 +14,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(gltf|fbx|obj)$/i,
+        test: /\.(gltf|fbx|obj|bmp)$/i,
         use: [
           {
             loader: 'file-loader',
