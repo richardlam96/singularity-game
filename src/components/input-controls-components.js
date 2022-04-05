@@ -2,7 +2,7 @@ import { MoveForwardBehavior } from '../behaviors/move-forward-behavior';
 import { ShootMissileBehavior } from '../behaviors/attack-behavior';
 import { TurnLeftBehavior, TurnRightBehavior } from '../behaviors/turn-behavior';
 import { Component } from './component';
-import { Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 
 export class ControlsComponent extends Component {
     execute() {}
@@ -44,6 +44,12 @@ export class EnemyInputControlsComponent extends ControlsComponent {
         this.willFire = (Math.random() < 0.5);
     }
 
+    turnTowards(direction) {
+        let quaternion = this._parent.modelComponent.model.quaternion;
+        let newQuat = new Quaternion().clone(quaternion).setFromUnitVectors(new Vector3(0, 0, 1), direction);
+        quaternion.slerp(newQuat, this._parent.statsComponent.turnSpeed);
+    }
+
     execute(game, timeElapsed) {
         MoveForwardBehavior.execute(this._parent);
 
@@ -53,16 +59,21 @@ export class EnemyInputControlsComponent extends ControlsComponent {
         let direction = vectorBetween.clone().normalize();
         let getPing = (timeElapsed - this._lastPingTime) > 3;
         let readyToFire = (timeElapsed - this._lastMissileTime) > this._parent.statsComponent.missileDelay;
+        
+        if ((vectorBetween.length() >= 20) && (vectorBetween.length() < 80)) {
+            this.turnTowards(direction);
 
-        if (vectorBetween.length() < 80) {
-            this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), direction);
             if (readyToFire && this.willFire) {
                 ShootMissileBehavior.execute(this._parent, game);
                 this._lastMissileTime = timeElapsed;
             }
-        } else if (getPing) {
-            this._parent.modelComponent.model.quaternion.setFromUnitVectors(new Vector3(0, 0, 1), direction);
+
+        } else if (vectorBetween.length() < 20) {
+            this.turnTowards(direction.negate());
+        }
+        else if (getPing) {
+            this.turnTowards(direction);
             this._lastPingTime = timeElapsed;
-        }     
+        }
     }
 }

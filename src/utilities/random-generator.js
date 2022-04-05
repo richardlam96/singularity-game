@@ -8,5 +8,9 @@ export class RandomGenerator {
         return low + this.randInt(difference);
     }
 
+    static randTrueFalse() {
+        return Math.random() < 0.5;
+    }
+
     // generate vectors instead?
 }
