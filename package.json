@@ -4,7 +4,6 @@
   "description": "Base ECS part of the game idea I have.",
   "main": "index.js",
   "private": true,
-  "type": "module",
   "scripts": {
     "start": "node dist/bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1",
