@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import * as THREE from 'three';
 import { AssetFactory } from "./utilities/asset-factory";
 import { InputManager } from "./utilities/input-manager";
 import { ThirdPersonCamera } from "./utilities/third-person-camera";
@@ -9,7 +9,6 @@ import skyboxTop from '../assets/Daylight Box_Top.bmp';
 import skyboxBottom from '../assets/Daylight Box_Bottom.bmp';
 import skyboxFront from '../assets/Daylight Box_Front.bmp';
 import skyboxBack from '../assets/Daylight Box_Back.bmp';
-
 
 const assetFactory = new AssetFactory();
 assetFactory.init()
