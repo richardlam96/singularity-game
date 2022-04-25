@@ -4,6 +4,7 @@
   "description": "Base ECS part of the game idea I have.",
   "main": "index.js",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
